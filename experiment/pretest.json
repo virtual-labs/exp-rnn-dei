@@ -2,37 +2,173 @@
   "version": 2.0,
   "questions": [
     {
-      "question": "This is a Sample Question 1?",
+      "question": "What is the primary purpose of a Recurrent Neural Network (RNN)?",
       "answers": {
-        "a": "answer1",
-        "b": "answer2",
-        "c": "answer3",
-        "d": "answer4"
+        "a": "Image classification",
+        "b": "Text generation",
+        "c": "Reinforcement learning",
+        "d": "Object detection"
       },
       "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
-        "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
+        "a": "Incorrect because image classification is mainly handled by CNNs.",
+        "b": "Correct because RNNs are widely used for sequence tasks such as text generation.",
+        "c": "Incorrect because reinforcement learning is a learning paradigm, not a primary RNN purpose.",
+        "d": "Incorrect because object detection is a computer vision task."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "What is the main characteristic of a Recurrent Neural Network (RNN)?",
+      "answers": {
+        "a": "It processes data sequentially and has loops in its architecture",
+        "b": "It processes data in parallel and has no loops",
+        "c": "It uses a single-layer architecture",
+        "d": "It is designed for image classification"
+      },
+      "explanations": {
+        "a": "Correct because feedback loops enable sequence modelling.",
+        "b": "Incorrect because that describes feedforward networks.",
+        "c": "Incorrect because RNNs can have multiple layers.",
+        "d": "Incorrect because CNNs are used for images."
       },
       "correctAnswer": "a",
       "difficulty": "beginner"
     },
     {
-      "question": "This is a Sample Question 2?",
+      "question": "Which layer type is typically used to capture sequential dependencies in an RNN?",
       "answers": {
-        "a": "answer1",
-        "b": "answer2",
-        "c": "answer3",
-        "d": "answer4"
+        "a": "Input layer",
+        "b": "Hidden layer",
+        "c": "Output layer",
+        "d": "Activation layer"
       },
       "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
-        "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
+        "a": "Incorrect because the input layer only receives data.",
+        "b": "Correct because the hidden layer maintains memory across time steps.",
+        "c": "Incorrect because the output layer produces predictions, not dependencies.",
+        "d": "Incorrect because activation layers add non-linearity but do not store sequence information."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "What is the advantage of using recurrent layers in an RNN?",
+      "answers": {
+        "a": "They can capture temporal dependencies in the input data",
+        "b": "They can handle variable-length inputs",
+        "c": "They can generate synthetic data",
+        "d": "They can handle non-linear transformations"
+      },
+      "explanations": {
+        "a": "Correct because recurrent connections allow learning from past inputs.",
+        "b": "Incorrect because this is a property of sequence models but not the main advantage.",
+        "c": "Incorrect because data generation is an application, not an inherent advantage.",
+        "d": "Incorrect because non-linearity comes from activation functions, not recurrence."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "What is the purpose of the hidden state in an RNN?",
+      "answers": {
+        "a": "To store the information from the previous time step",
+        "b": "To adjust the learning rate during training",
+        "c": "To compute the gradients for backpropagation",
+        "d": "None of the above"
+      },
+      "explanations": {
+        "a": "Correct because hidden state carries memory forward.",
+        "b": "Incorrect because learning rate is controlled by the optimizer.",
+        "c": "Incorrect because gradients are computed during backpropagation.",
+        "d": "Incorrect because option (a) is correct."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Which activation function is commonly used in the recurrent layers of an RNN?",
+      "answers": {
+        "a": "ReLU",
+        "b": "Sigmoid",
+        "c": "Tanh (Hyperbolic Tangent)",
+        "d": "Softmax"
+      },
+      "explanations": {
+        "a": "Incorrect because ReLU is less stable for recurrent connections.",
+        "b": "Incorrect because sigmoid is mainly used in gates, not vanilla RNNs.",
+        "c": "Correct because tanh keeps values bounded and centred.",
+        "d": "Incorrect because softmax is used in output layers."
       },
       "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "What is the purpose of the time step parameter in an RNN?",
+      "answers": {
+        "a": "To determine the number of recurrent layers",
+        "b": "To adjust the learning rate",
+        "c": "To specify the length of the input sequence",
+        "d": "None of the above"
+      },
+      "explanations": {
+        "a": "Incorrect because layers and time steps are different concepts.",
+        "b": "Incorrect because learning rate is independent of time steps.",
+        "c": "Correct because time steps define how many sequence elements are processed.",
+        "d": "Incorrect because option (c) is correct."
+      },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Which layer type is commonly used to initialize the hidden state in an RNN?",
+      "answers": {
+        "a": "Input layer",
+        "b": "Hidden layer",
+        "c": "Output layer",
+        "d": "Activation layer"
+      },
+      "explanations": {
+        "a": "Incorrect because input layer does not initialize memory.",
+        "b": "Correct because the hidden state belongs to the hidden layer and is initialized at the start of sequence processing.",
+        "c": "Incorrect because output layer does not manage memory.",
+        "d": "Incorrect because activation layers only apply non-linearity."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "What is the main difference between an RNN and a feedforward neural network?",
+      "answers": {
+        "a": "RNN uses convolution layers",
+        "b": "RNN has feedback connections",
+        "c": "RNN has no hidden layers",
+        "d": "RNN works only on images"
+      },
+      "explanations": {
+        "a": "Incorrect because convolution layers are used in CNNs, not RNNs.",
+        "b": "Correct because RNNs contain recurrent (feedback) connections that allow information to persist across time steps.",
+        "c": "Incorrect because RNNs can have one or more hidden layers.",
+        "d": "Incorrect because RNNs are mainly used for sequential data such as text and time series."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "What dataset is commonly used for character-level language modelling demonstrations?",
+      "answers": {
+        "a": "MNIST",
+        "b": "CIFAR-10",
+        "c": "ImageNet",
+        "d": "Tiny Shakespeare"
+      },
+      "explanations": {
+        "a": "Incorrect because MNIST is a handwritten digit image dataset, not used for text modelling.",
+        "b": "Incorrect because CIFAR-10 is an image classification dataset.",
+        "c": "Incorrect because ImageNet is used for large-scale image recognition tasks.",
+        "d": "Correct because Tiny Shakespeare is widely used for character-level language modelling with RNNs."
+      },
+      "correctAnswer": "d",
       "difficulty": "beginner"
     }
   ]
