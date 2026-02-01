@@ -313,7 +313,7 @@ function updateTrainingOutput() {
         // Generate from arrays
         let log = '';
         for (let i = 0; i < data.train_losses.length; i++) {
-            log += `Epoch ${i+1}/${data.epochs} | Train Loss: ${data.train_losses[i].toFixed(4)} | Val Loss: ${data.val_losses[i].toFixed(4)}\n`;
+            log += `Epochs ${i+1}/${data.epochs} | Train Loss: ${data.train_losses[i].toFixed(4)} | Val Loss: ${data.val_losses[i].toFixed(4)}\n`;
         }
         elements.trainingLog.textContent = log.trim();
     }
@@ -370,7 +370,7 @@ function handleStartTextChange(newValue) {
 function downloadExperiment() {
     // Download the experiment PDF
     const link = document.createElement('a');
-    link.href = './assets/Recurrent Neural Networks (RNN).pdf';
+    link.href = './assets/Exp-6_Recurrent_Neural_Networks.pdf';
     link.download = 'RNN_Experiment.pdf';
     document.body.appendChild(link);
     link.click();
@@ -382,6 +382,10 @@ function downloadExperiment() {
 // ============================================
 
 function resetSimulation() {
+    if (!confirm('Are you sure you want to reset the entire experiment?')) {
+        return;
+    }
+    
     state.currentStep = 1;
     state.completedSteps.clear();
     state.runningStep = null;
