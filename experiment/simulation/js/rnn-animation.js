@@ -141,7 +141,7 @@ const RNNAnimation = {
                 <div class="rnn-formula-box">
                     <span class="rnn-formula-label">RNN Update Rule:</span>
                     <code class="rnn-formula-code">
-                        h<sub>t</sub> = tanh(W<sub>hh</sub>h<sub>t-1</sub> + W<sub>xh</sub>x<sub>t</sub> + b)
+                        h<sub>t</sub> = tanh(W<sub>hh</sub>h<sub>t-1</sub> + W<sub>xh</sub>x<sub>t</sub> + b<sub>h</sub>)
                     </code>
                 </div>
             </div>
