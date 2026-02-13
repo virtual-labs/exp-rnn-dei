@@ -4,638 +4,195 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Implementation and simulation of RNN</title>
-	<link rel="stylesheet" href="./css/main.css">
-	<link rel="stylesheet" href="./css/rnn-animation.css">
-	<!-- Chart.js for visualizations -->
-	<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+	<title>RNN Educational Lab</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+	<style>
+		:root {
+			--bg-color: #ffffff;
+			--text-primary: #111111;
+			--text-secondary: #666666;
+			--border-color: #eaeaea;
+			--hover-border: #000000;
+			--card-bg: #ffffff;
+			--accent: #333333;
+		}
+
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		body {
+			font-family: 'Inter', -apple-system, sans-serif;
+			background-color: var(--bg-color);
+			color: var(--text-primary);
+			min-height: 100vh;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			padding: 2rem;
+			line-height: 1.5;
+			-webkit-font-smoothing: antialiased;
+		}
+
+		.container {
+			max-width: 800px;
+			width: 100%;
+		}
+
+		.header {
+			text-align: left;
+			margin-bottom: 4rem;
+			padding-bottom: 2rem;
+			border-bottom: 1px solid var(--border-color);
+		}
+
+		.header h1 {
+			font-size: 2rem;
+			font-weight: 600;
+			margin-bottom: 0.5rem;
+			letter-spacing: -0.03em;
+		}
+
+		.header p {
+			font-size: 1rem;
+			color: var(--text-secondary);
+			font-weight: 400;
+		}
+
+		.options {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+			gap: 1.5rem;
+		}
+
+		.option-card {
+			background: var(--card-bg);
+			border: 1px solid var(--border-color);
+			border-radius: 6px;
+			padding: 2rem;
+			text-decoration: none;
+			color: inherit;
+			transition: all 0.2s ease;
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+		}
+
+		.option-card:hover {
+			border-color: var(--hover-border);
+			transform: translateY(-1px);
+		}
+
+		.option-label {
+			font-size: 0.75rem;
+			text-transform: uppercase;
+			letter-spacing: 0.05em;
+			color: var(--text-secondary);
+			margin-bottom: 1rem;
+			font-weight: 500;
+			border: 1px solid var(--border-color);
+			padding: 0.25rem 0.5rem;
+			border-radius: 4px;
+		}
+
+		.option-title {
+			font-size: 1.25rem;
+			font-weight: 500;
+			margin-bottom: 0.75rem;
+			color: var(--text-primary);
+			letter-spacing: -0.02em;
+		}
+
+		.option-description {
+			font-size: 0.95rem;
+			color: var(--text-secondary);
+			line-height: 1.6;
+			margin-bottom: 1.25rem;
+		}
+
+		.option-cta {
+			display: inline-flex;
+			align-items: center;
+			gap: 0.4rem;
+			padding: 0.5rem 1.2rem;
+			font-size: 0.85rem;
+			font-weight: 600;
+			color: #fff;
+			background: #111;
+			border: none;
+			border-radius: 6px;
+			cursor: pointer;
+			transition: all 0.2s;
+			font-family: 'Inter', -apple-system, sans-serif;
+			margin-top: auto;
+		}
+
+		.option-card:hover .option-cta {
+			background: #333;
+			transform: translateX(2px);
+		}
+
+		.footer {
+			text-align: center;
+			color: #999;
+			margin-top: 5rem;
+			font-size: 0.8rem;
+		}
+
+		@media (max-width: 600px) {
+			.header {
+				text-align: center;
+			}
+
+			.header h1 {
+				font-size: 1.75rem;
+			}
+
+			.option-card {
+				align-items: center;
+				text-align: center;
+			}
+		}
+	</style>
 </head>
 
 <body>
-	<div class="simulation-container">
-		<!-- Step Indicator Sidebar -->
-		<aside class="step-sidebar">
-			<div class="step-sidebar-header">
-				<h3>Experiment Steps</h3>
-			</div>
-			<div class="step-list">
-				<div class="step-item" data-step="1">
-					<div class="step-indicator">
-						<span class="step-number">1</span>
-					</div>
-					<div class="step-content">
-						<span class="step-title">Import Libraries & Load Data</span>
-					</div>
+	<div class="container">
+		<div class="header">
+			<h1>RNN Educational Lab</h1>
+			<p>Interactive learning environment for Recurrent Neural Networks</p>
+		</div>
+
+		<div class="options">
+			<a href="notebook/index.html" class="option-card">
+				<div class="option-label">Tutorial</div>
+				<div class="option-title">Notebook View</div>
+				<div class="option-description">
+					A comprehensive step-by-step guide with code explanations and character-level RNN training on
+					Shakespeare text.
 				</div>
-				<div class="step-item" data-step="2">
-					<div class="step-indicator">
-						<span class="step-number">2</span>
-					</div>
-					<div class="step-content">
-						<span class="step-title">Dataset Preprocessing</span>
-					</div>
+				<span class="option-cta">Open Tutorial →</span>
+			</a>
+
+			<a href="interactive/index.html" class="option-card">
+				<div class="option-label">Simulation</div>
+				<div class="option-title">Interactive Playground</div>
+				<div class="option-description">
+					Visual experiments with time unrolling, hidden state evolution, and toy sequence learning.
 				</div>
-				<div class="step-item" data-step="3">
-					<div class="step-indicator">
-						<span class="step-number">3</span>
-					</div>
-					<div class="step-content">
-						<span class="step-title">Hyperparameters Setup</span>
-					</div>
-				</div>
-				<div class="step-item" data-step="4">
-					<div class="step-indicator">
-						<span class="step-number">4</span>
-					</div>
-					<div class="step-content">
-						<span class="step-title">Model Definition</span>
-					</div>
-				</div>
-				<div class="step-item" data-step="5">
-					<div class="step-indicator">
-						<span class="step-number">5</span>
-					</div>
-					<div class="step-content">
-						<span class="step-title">Training Function</span>
-					</div>
-				</div>
-				<div class="step-item" data-step="6">
-					<div class="step-indicator">
-						<span class="step-number">6</span>
-					</div>
-					<div class="step-content">
-						<span class="step-title">Run Training</span>
-					</div>
-				</div>
-				<div class="step-item" data-step="7">
-					<div class="step-indicator">
-						<span class="step-number">7</span>
-					</div>
-					<div class="step-content">
-						<span class="step-title">Plot Training Loss</span>
-					</div>
-				</div>
-				<div class="step-item" data-step="8">
-					<div class="step-indicator">
-						<span class="step-number">8</span>
-					</div>
-					<div class="step-content">
-						<span class="step-title">Text Generation</span>
-					</div>
-				</div>
-				<div class="step-item" data-step="9">
-					<div class="step-indicator">
-						<span class="step-number">9</span>
-					</div>
-					<div class="step-content">
-						<span class="step-title">Hidden State Visualization</span>
-					</div>
-				</div>
-			</div>
-			<div class="step-sidebar-footer">
-				<button class="run-all-btn" id="downloadBtn">
-					<!-- <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-						<path d="M8 5v14l11-7z" />
-					</svg> -->
-					Download Experiment
-				</button>
-				<button class="reset-btn" id="resetBtn">
-					<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-						<path
-							d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z" />
-					</svg>
-					Reset
-				</button>
-			</div>
-		</aside>
+				<span class="option-cta">Open Playground →</span>
+			</a>
+		</div>
 
-		<!-- Main Notebook Area -->
-		<main class="notebook-area">
-			<div class="notebook-header">
-				<h1>Implementation and simulation of RNN</h1>
-				<!-- <p class="notebook-subtitle">Character-level language model trained on Shakespeare text</p> -->
-			</div>
-
-			<!-- Cell 1: Import Libraries & Load Dataset -->
-			<div class="notebook-cell" data-cell="1" data-step="1">
-				<div class="cell-header">
-					<span class="cell-label">Step 1: Import Libraries & Load Dataset</span>
-					<button class="run-btn">
-						<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-							<path d="M8 5v14l11-7z" />
-						</svg>
-						Run
-					</button>
-				</div>
-				<div class="cell-code">
-					<pre><code class="language-python"><span class="keyword">import</span> torch
-<span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn
-<span class="keyword">import</span> numpy <span class="keyword">as</span> np
-<span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt
-
-plt.rcParams.update({
-    <span class="string">"figure.figsize"</span>: (<span class="number">8</span>, <span class="number">5</span>),
-    <span class="string">"axes.grid"</span>: <span class="keyword">True</span>,
-    <span class="string">"lines.linewidth"</span>: <span class="number">2</span>,
-    <span class="string">"font.size"</span>: <span class="number">11</span>
-})
-
-<span class="comment"># Download Tiny Shakespeare dataset</span>
-!curl -L -o tiny_shakespeare.txt https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt
-
-<span class="keyword">with</span> <span class="builtin">open</span>(<span class="string">"tiny_shakespeare.txt"</span>, <span class="string">"r"</span>, encoding=<span class="string">"utf-8"</span>) <span class="keyword">as</span> f:
-    text = f.read()
-
-<span class="builtin">print</span>(<span class="string">"Dataset loaded successfully"</span>)</code></pre>
-				</div>
-				<div class="cell-output hidden">
-					<div class="output-label">Output:</div>
-					<div class="output-content text-output">
-						<pre>  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-100 1115k  100 1115k    0     0  1234k      0 --:--:-- --:--:-- --:--:-- 1234k
-Dataset loaded successfully</pre>
-					</div>
-				</div>
-			</div>
-
-			<!-- Cell 2: Dataset Preprocessing -->
-			<div class="notebook-cell" data-cell="2" data-step="2">
-				<div class="cell-header">
-					<span class="cell-label">Step 2: Dataset Preprocessing</span>
-					<button class="run-btn">
-						<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-							<path d="M8 5v14l11-7z" />
-						</svg>
-						Run
-					</button>
-				</div>
-				<div class="cell-code">
-					<pre><code class="language-python">n = <span class="builtin">len</span>(text)
-
-train_text = text[:<span class="builtin">int</span>(<span class="number">0.9</span>*n)]
-val_text   = text[<span class="builtin">int</span>(<span class="number">0.9</span>*n):<span class="builtin">int</span>(<span class="number">0.95</span>*n)]
-test_text  = text[<span class="builtin">int</span>(<span class="number">0.95</span>*n):]
-
-<span class="builtin">print</span>(<span class="string">"Train:"</span>, <span class="builtin">len</span>(train_text))
-<span class="builtin">print</span>(<span class="string">"Val  :"</span>, <span class="builtin">len</span>(val_text))
-<span class="builtin">print</span>(<span class="string">"Test :"</span>, <span class="builtin">len</span>(test_text))
-
-<span class="comment"># Create character vocabulary and mappings</span>
-chars = <span class="builtin">sorted</span>(<span class="builtin">list</span>(<span class="builtin">set</span>(text)))
-vocab_size = <span class="builtin">len</span>(chars)
-
-char2idx = {ch:i <span class="keyword">for</span> i,ch <span class="keyword">in</span> <span class="builtin">enumerate</span>(chars)}
-idx2char = {i:ch <span class="keyword">for</span> i,ch <span class="keyword">in</span> <span class="builtin">enumerate</span>(chars)}
-
-<span class="keyword">def</span> <span class="function">text_to_ints</span>(s):
-    <span class="keyword">return</span> np.array([char2idx[c] <span class="keyword">for</span> c <span class="keyword">in</span> s], dtype=np.int32)
-
-train_ids = text_to_ints(train_text)
-val_ids   = text_to_ints(val_text)
-test_ids  = text_to_ints(test_text)
-
-<span class="builtin">print</span>(<span class="string">"Vocabulary size:"</span>, vocab_size)</code></pre>
-				</div>
-				<div class="cell-output hidden">
-					<div class="output-label">Output:</div>
-					<div class="output-content text-output">
-						<pre>Train: 1003854
-Val  : 55770
-Test : 55770
-Vocabulary size: 65</pre>
-					</div>
-				</div>
-			</div>
-
-			<!-- Cell 3: Hyperparameters Setup -->
-			<div class="notebook-cell" data-cell="3" data-step="3">
-				<div class="cell-header">
-					<span class="cell-label">Step 3: Hyperparameters Setup</span>
-					<button class="run-btn">
-						<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-							<path d="M8 5v14l11-7z" />
-						</svg>
-						Run
-					</button>
-				</div>
-				<!-- Hyperparameter Selection -->
-				<div class="param-selector">
-					<div class="param-group">
-						<label for="epochsSelect">Epochs:</label>
-						<select id="epochsSelect" class="param-dropdown">
-							<option value="5">5</option>
-							<option value="10">10</option>
-							<option value="15" selected>15</option>
-						</select>
-					</div>
-					<div class="param-group">
-						<label for="lrSelect">Learning Rate:</label>
-						<select id="lrSelect" class="param-dropdown">
-							<option value="0.001" selected>0.001</option>
-							<option value="0.01">0.01</option>
-						</select>
-					</div>
-				</div>
-				<div class="cell-code">
-					<pre><code class="language-python">
-epochs = <span class="number" id="codeEpochs">15</span>            
-learning_rate = <span class="number" id="codeLr">0.01</span> 
-   
-<span class="comment"># =====================================</span>
-embed_size = <span class="number">128</span>      
-batch_size = <span class="number">64</span>       
-seq_length = <span class="number">100</span>      
-num_layers = <span class="number">2</span>    
-hidden_size = <span class="number">256</span> 
-
-<span class="keyword">def</span> <span class="function">get_batches</span>(data, batch_size, seq_length):
-    n_batches = <span class="builtin">len</span>(data) // (batch_size * seq_length)
-    data = data[:n_batches * batch_size * seq_length]
-
-    x = data.reshape(batch_size, -<span class="number">1</span>)
-    y = np.roll(x, -<span class="number">1</span>, axis=<span class="number">1</span>)
-
-    <span class="keyword">return</span> x, y</code></pre>
-				</div>
-				<div class="cell-output hidden">
-					<div class="output-label">Output:</div>
-					<div class="output-content text-output">
-						<div class="params-table">
-							<table>
-								<tr>
-									<th>Parameter</th>
-									<th>Value</th>
-								</tr>
-								<tr>
-									<td>Epochs</td>
-									<td id="outputEpochs">15</td>
-								</tr>
-								<tr>
-									<td>Learning Rate</td>
-									<td id="outputLr">0.001</td>
-								</tr>
-								<tr>
-									<td>Embedding Size</td>
-									<td>128</td>
-								</tr>
-								<tr>
-									<td>Batch Size</td>
-									<td>64</td>
-								</tr>
-								<tr>
-									<td>Sequence Length</td>
-									<td>100</td>
-								</tr>
-								<tr>
-									<td>Number of Layers</td>
-									<td>2</td>
-								</tr>
-								<tr>
-									<td>Hidden Size</td>
-									<td>256</td>
-								</tr>
-							</table>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<!-- Cell 4: Model Definition -->
-			<div class="notebook-cell" data-cell="4" data-step="4">
-				<div class="cell-header">
-					<span class="cell-label">Step 4: Defining the RNN Model</span>
-					<button class="run-btn">
-						<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-							<path d="M8 5v14l11-7z" />
-						</svg>
-						Run
-					</button>
-				</div>
-				<div class="cell-code">
-					<pre><code class="language-python"><span class="keyword">class</span> <span class="class-name">CharRNN</span>(nn.Module):
-    <span class="keyword">def</span> <span class="function">__init__</span>(<span class="self">self</span>, vocab_size, embed_size, hidden_size, num_layers):
-        <span class="builtin">super</span>().__init__()
-        <span class="self">self</span>.embed = nn.Embedding(vocab_size, embed_size)
-        <span class="self">self</span>.rnn = nn.RNN(embed_size, hidden_size, num_layers, batch_first=<span class="keyword">True</span>)
-        <span class="self">self</span>.fc = nn.Linear(hidden_size, vocab_size)
-
-    <span class="keyword">def</span> <span class="function">forward</span>(<span class="self">self</span>, x, hidden):
-        x = <span class="self">self</span>.embed(x)
-        out, hidden = <span class="self">self</span>.rnn(x, hidden)
-        out = <span class="self">self</span>.fc(out)
-        <span class="keyword">return</span> out, hidden
-
-model = CharRNN(vocab_size, embed_size, hidden_size, num_layers)
-<span class="builtin">print</span>(model)</code></pre>
-				</div>
-				<div class="cell-output hidden">
-					<div class="output-label">Output:</div>
-					<div class="output-content text-output">
-						<pre>CharRNN(
-  (embed): Embedding(65, 128)
-  (rnn): RNN(128, 256, num_layers=2, batch_first=True)
-  (fc): Linear(in_features=256, out_features=65, bias=True)
-)</pre>
-					</div>
-				</div>
-			</div>
-
-			<!-- Cell 5: Training Function -->
-			<div class="notebook-cell" data-cell="5" data-step="5">
-				<div class="cell-header">
-					<span class="cell-label">Step 5: Define Training Function</span>
-					<button class="run-btn">
-						<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-							<path d="M8 5v14l11-7z" />
-						</svg>
-						Run
-					</button>
-				</div>
-				<div class="cell-code">
-					<pre><code class="language-python"><span class="keyword">def</span> <span class="function">train_model</span>(model, train_ids, val_ids):
-    criterion = nn.CrossEntropyLoss()
-    optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
-
-    train_losses, val_losses = [], []
-
-    <span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="builtin">range</span>(epochs):
-        <span class="comment"># -------- Training --------</span>
-        model.train()
-        x, y = get_batches(train_ids, batch_size, seq_length)
-        hidden = <span class="keyword">None</span>
-        total_loss = <span class="number">0</span>
-        num_batches = <span class="number">0</span>
-
-        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="builtin">range</span>(<span class="number">0</span>, x.shape[<span class="number">1</span>], seq_length):
-            inputs = torch.tensor(
-                x[:, i:i+seq_length], dtype=torch.long
-            )
-            targets = torch.tensor(
-                y[:, i:i+seq_length], dtype=torch.long
-            )
-
-            optimizer.zero_grad()
-
-            <span class="keyword">if</span> hidden <span class="keyword">is not</span> <span class="keyword">None</span>:
-                hidden = hidden.detach()
-
-            outputs, hidden = model(inputs, hidden)
-
-            loss = criterion(
-                outputs.view(-<span class="number">1</span>, vocab_size),
-                targets.view(-<span class="number">1</span>)
-            )
-
-            loss.backward()
-            torch.nn.utils.clip_grad_norm_(model.parameters(), <span class="number">5</span>)
-            optimizer.step()
-
-            total_loss += loss.item()
-            num_batches += <span class="number">1</span>
-
-        train_losses.append(total_loss / num_batches)
-
-        <span class="comment"># -------- Validation --------</span>
-        model.eval()
-        <span class="keyword">with</span> torch.no_grad():
-            vx, vy = get_batches(val_ids, batch_size, seq_length)
-            vhidden = <span class="keyword">None</span>
-            vloss = <span class="number">0</span>
-            v_batches = <span class="number">0</span>
-
-            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="builtin">range</span>(<span class="number">0</span>, vx.shape[<span class="number">1</span>], seq_length):
-                vin = torch.tensor(
-                    vx[:, i:i+seq_length], dtype=torch.long
-                )
-                vtar = torch.tensor(
-                    vy[:, i:i+seq_length], dtype=torch.long
-                )
-
-                <span class="keyword">if</span> vhidden <span class="keyword">is not</span> <span class="keyword">None</span>:
-                    vhidden = vhidden.detach()
-
-                out, vhidden = model(vin, vhidden)
-                vloss += criterion(
-                    out.view(-<span class="number">1</span>, vocab_size),
-                    vtar.view(-<span class="number">1</span>)
-                ).item()
-                v_batches += <span class="number">1</span>
-
-        val_losses.append(vloss / v_batches)
-
-        <span class="builtin">print</span>(
-            <span class="string">f"Epoch {epoch+1}/{epochs} | "</span>
-            <span class="string">f"Train Loss: {train_losses[-1]:.4f} | "</span>
-            <span class="string">f"Val Loss: {val_losses[-1]:.4f}"</span>
-        )
-
-    <span class="keyword">return</span> train_losses, val_losses</code></pre>
-				</div>
-				<div class="cell-output hidden">
-					<div class="output-label">Output:</div>
-					<div class="output-content text-output">
-						<span class="success-text">✓ train_model function defined successfully</span>
-					</div>
-				</div>
-			</div>
-
-			<!-- Cell 6: Run Training -->
-			<div class="notebook-cell" data-cell="6" data-step="6">
-				<div class="cell-header">
-					<span class="cell-label">Step 6: Run Training</span>
-					<button class="run-btn">
-						<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-							<path d="M8 5v14l11-7z" />
-						</svg>
-						Run
-					</button>
-				</div>
-				<div class="cell-code">
-					<pre><code class="language-python">train_losses, val_losses = train_model(model, train_ids, val_ids)</code></pre>
-				</div>
-				<div class="cell-output hidden">
-					<div class="output-label">Output:</div>
-					<div class="output-content">
-						<div class="training-output">
-							<pre id="trainingLog">Loading training data...</pre>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<!-- Cell 7: Plot Training Loss -->
-			<div class="notebook-cell" data-cell="7" data-step="7">
-				<div class="cell-header">
-					<span class="cell-label">Step 7: Plot Training Loss</span>
-					<button class="run-btn">
-						<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-							<path d="M8 5v14l11-7z" />
-						</svg>
-						Run
-					</button>
-				</div>
-				<div class="cell-code">
-					<pre><code class="language-python">epochs_range = <span class="builtin">range</span>(<span class="number">1</span>, epochs + <span class="number">1</span>)
-
-plt.figure()
-plt.plot(epochs_range, train_losses, label=<span class="string">"Train Loss"</span>, marker=<span class="string">"o"</span>)
-plt.plot(epochs_range, val_losses, label=<span class="string">"Validation Loss"</span>, marker=<span class="string">"o"</span>)
-
-plt.xlabel(<span class="string">"Epoch"</span>)
-plt.ylabel(<span class="string">"Loss"</span>)
-plt.title(<span class="string">"Training vs Validation Loss"</span>)
-plt.legend()
-plt.show()</code></pre>
-				</div>
-				<div class="cell-output hidden">
-					<div class="output-label">Output:</div>
-					<div class="output-content">
-						<div class="chart-container">
-							<canvas id="lossChart"></canvas>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<!-- Cell 8: Text Generation -->
-			<div class="notebook-cell" data-cell="8" data-step="8">
-				<div class="cell-header">
-					<span class="cell-label">Step 8: Text Generation</span>
-					<button class="run-btn">
-						<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-							<path d="M8 5v14l11-7z" />
-						</svg>
-						Run
-					</button>
-				</div>
-				<!-- Start Text Selection -->
-				<div class="param-selector">
-					<div class="param-group">
-						<label for="startTextSelect">Starting Text:</label>
-						<select id="startTextSelect" class="param-dropdown wide">
-							<option value="ROMEO" selected>ROMEO: HELLO!</option>
-							<option value="JULIET">JULIET:</option>
-							<option value="KING">KING:</option>
-						</select>
-					</div>
-				</div>
-				<div class="cell-code">
-					<pre><code class="language-python"><span class="keyword">def</span> <span class="function">generate_text</span>(model, start_text, length=<span class="number">500</span>):
-    model.eval()
-    hidden = <span class="keyword">None</span>
-    generated = start_text
-
-    <span class="comment"># Prime the RNN with the starting text</span>
-    <span class="keyword">for</span> ch <span class="keyword">in</span> start_text[:-<span class="number">1</span>]:
-        x = torch.tensor([[char2idx[ch]]])
-        _, hidden = model(x, hidden)
-
-    <span class="comment"># Start generation from the last character</span>
-    inp = torch.tensor([[char2idx[start_text[-<span class="number">1</span>]]]])
-
-    <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="builtin">range</span>(length):
-        out, hidden = model(inp, hidden)
-        probs = torch.softmax(out[:, -<span class="number">1</span>, :], dim=-<span class="number">1</span>)
-        char_idx = torch.multinomial(probs, <span class="number">1</span>).item()
-
-        generated += idx2char[char_idx]
-        inp = torch.tensor([[char_idx]])
-
-    <span class="keyword">return</span> generated
-
-<span class="builtin">print</span>(generate_text(model, <span class="string" id="codeStartText">"ROMEO: HELLO! "</span>))</code></pre>
-				</div>
-				<div class="cell-output hidden">
-					<div class="output-label">Output:</div>
-					<div class="output-content">
-						<div class="generated-text-container">
-							<div class="generated-text-header">
-								<span class="generated-icon">📜</span>
-								Generated Shakespeare Text:
-							</div>
-							<div class="generated-text" id="generatedText">Loading generated text...</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<!-- Cell 9: Hidden State Visualization -->
-			<div class="notebook-cell" data-cell="9" data-step="9">
-				<div class="cell-header">
-					<span class="cell-label">Step 9: Hidden State Visualization</span>
-					<button class="run-btn">
-						<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-							<path d="M8 5v14l11-7z" />
-						</svg>
-						Run
-					</button>
-				</div>
-				<div class="cell-code">
-					<pre><code class="language-python"><span class="keyword">def</span> <span class="function">get_hidden_states</span>(model, text):
-    model.eval()
-    hidden = <span class="keyword">None</span>
-    states = []
-
-    <span class="keyword">with</span> torch.no_grad():
-        <span class="keyword">for</span> ch <span class="keyword">in</span> text:
-            x = torch.tensor([[char2idx[ch]]], dtype=torch.long)
-            _, hidden = model(x, hidden)
-            states.append(hidden[-<span class="number">1</span>, <span class="number">0</span>].cpu().numpy())
-
-    <span class="keyword">return</span> np.array(states)
-
-sample_text = <span class="string">"ROMEO: HELLO! "</span>
-hidden_states = get_hidden_states(model, sample_text)
-
-plt.figure(figsize=(<span class="number">10</span>, <span class="number">5</span>))
-<span class="keyword">for</span> unit <span class="keyword">in</span> <span class="builtin">range</span>(<span class="number">4</span>):
-    plt.plot(hidden_states[:, unit], marker=<span class="string">"o"</span>, label=<span class="string">f"Unit {unit}"</span>)
-
-plt.xticks(<span class="builtin">range</span>(<span class="builtin">len</span>(sample_text)), <span class="builtin">list</span>(sample_text))
-plt.xlabel(<span class="string">"Time step (character)"</span>)
-plt.ylabel(<span class="string">"Hidden unit value"</span>)
-plt.title(<span class="string">"Hidden state evolution for a short sequence"</span>)
-plt.grid(<span class="keyword">True</span>)
-plt.legend()
-plt.show()</code></pre>
-				</div>
-				<div class="cell-output hidden">
-					<div class="output-label">Output:</div>
-					<div class="output-content">
-						<div class="chart-container">
-							<canvas id="hiddenStateChart"></canvas>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<!-- Completion message -->
-			<div class="completion-message hidden" id="completionMessage">
-				<div class="completion-icon">🎉</div>
-				<div class="completion-text">
-					<h3>Experiment Completed!</h3>
-					<p>You have successfully trained an RNN model for character-level text generation on Shakespeare's
-						works. Now explore the animation below to see how hidden states evolve!</p>
-				</div>
-			</div>
-
-			<!-- RNN Hidden State Animation Section -->
-			<div class="rnn-animation-section hidden" id="rnnAnimationSection">
-				<!-- Will be populated by rnn-animation.js -->
-			</div>
-		</main>
+		<div class="footer">
+			<p>Virtual Labs &mdash; Deep Learning Experiments</p>
+		</div>
 	</div>
-
-	<!-- Loading Overlay -->
-	<div class="loading-overlay hidden" id="loadingOverlay">
-		<div class="loading-spinner"></div>
-		<div class="loading-text">Executing...</div>
-	</div>
-
-	<script src="./js/data.js"></script>
-	<script src="./js/main.js"></script>
-	<script src="./js/rnn-animation.js"></script>
 </body>
 
 </html>
