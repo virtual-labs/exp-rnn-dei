@@ -2,7 +2,7 @@
   "version": 2.0,
   "questions": [
     {
-      "question": "What is the primary purpose of a Recurrent Neural Network (RNN)?",
+      "question": "1. What is the primary purpose of a Recurrent Neural Network (RNN)?",
       "answers": {
         "a": "Image classification",
         "b": "Text generation",
@@ -19,7 +19,7 @@
       "difficulty": "beginner"
     },
     {
-      "question": "What is the main characteristic of a Recurrent Neural Network (RNN)?",
+      "question": "2. What is the main characteristic of a Recurrent Neural Network (RNN)?",
       "answers": {
         "a": "It processes data sequentially and has loops in its architecture",
         "b": "It processes data in parallel and has no loops",
@@ -36,7 +36,7 @@
       "difficulty": "beginner"
     },
     {
-      "question": "Which layer type is typically used to capture sequential dependencies in an RNN?",
+      "question": "3. Which layer type is typically used to capture sequential dependencies in an RNN?",
       "answers": {
         "a": "Input layer",
         "b": "Hidden layer",
@@ -53,7 +53,7 @@
       "difficulty": "beginner"
     },
     {
-      "question": "What is the advantage of using recurrent layers in an RNN?",
+      "question": "4. What is the advantage of using recurrent layers in an RNN?",
       "answers": {
         "a": "They can capture temporal dependencies in the input data",
         "b": "They can handle variable-length inputs",
@@ -70,7 +70,7 @@
       "difficulty": "beginner"
     },
     {
-      "question": "What is the purpose of the hidden state in an RNN?",
+      "question": "5. What is the purpose of the hidden state in an RNN?",
       "answers": {
         "a": "To store the information from the previous time step",
         "b": "To adjust the learning rate during training",
@@ -87,7 +87,7 @@
       "difficulty": "beginner"
     },
     {
-      "question": "Which activation function is commonly used in the recurrent layers of an RNN?",
+      "question": "6. Which activation function is commonly used in the recurrent layers of an RNN?",
       "answers": {
         "a": "ReLU",
         "b": "Sigmoid",
@@ -104,7 +104,7 @@
       "difficulty": "beginner"
     },
     {
-      "question": "What is the purpose of the time step parameter in an RNN?",
+      "question": "7. What is the purpose of the time step parameter in an RNN?",
       "answers": {
         "a": "To determine the number of recurrent layers",
         "b": "To adjust the learning rate",
@@ -121,7 +121,7 @@
       "difficulty": "beginner"
     },
     {
-      "question": "Which layer type is commonly used to initialize the hidden state in an RNN?",
+      "question": "8. Which layer type is commonly used to initialize the hidden state in an RNN?",
       "answers": {
         "a": "Input layer",
         "b": "Hidden layer",
@@ -138,7 +138,7 @@
       "difficulty": "beginner"
     },
     {
-      "question": "What is the main difference between an RNN and a feedforward neural network?",
+      "question": "9. What is the main difference between an RNN and a feedforward neural network?",
       "answers": {
         "a": "RNN uses convolution layers",
         "b": "RNN has feedback connections",
@@ -155,7 +155,7 @@
       "difficulty": "beginner"
     },
     {
-      "question": "What dataset is commonly used for character-level language modelling demonstrations?",
+      "question": "10. What dataset is commonly used for character-level language modelling demonstrations?",
       "answers": {
         "a": "MNIST",
         "b": "CIFAR-10",

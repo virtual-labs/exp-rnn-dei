@@ -45,9 +45,11 @@
                     <div class="observe-box glass-panel">
                         <ul>
                             <li>Each RNN cell shares <strong>identical</strong> weights W, U, b</li>
+                            <li><strong>W</strong> (recurrent weight): multiplies the previous hidden state h<sub>t-1</sub></li>
+                            <li><strong>U</strong> (input weight): multiplies the current input x<sub>t</sub></li>
+                            <li><strong>b</strong> (bias): a learned offset added at each step</li>
                             <li>Hidden state h<sub>t</sub> flows left → right as a memory chain</li>
-                            <li>At each step: <code>h<sub>t</sub> = tanh(W·h<sub>t-1</sub> + U·x<sub>t</sub> + b)</code>
-                            </li>
+                            <li>At each step: <code>h<sub>t</sub> = tanh(W·h<sub>t-1</sub> + U·x<sub>t</sub> + b)</code></li>
                         </ul>
                     </div>
 
@@ -57,7 +59,7 @@
                             <li>Press <strong>Play</strong> to animate the sequence processing</li>
                             <li>Use the <strong>Step slider</strong> to jump to any timestep</li>
                             <li>Adjust <strong>Speed</strong> (0.5x, 1x, 2x)</li>
-                            <li>The <strong>heatmap</strong> below shows hidden state values at each step</li>
+                            <li>The <strong>heatmap</strong> below shows hidden state values at each timestep — columns = timesteps, rows = hidden dimensions (d<sub>0</sub>…d<sub>n-1</sub>)</li>
                         </ul>
                     </div>
 

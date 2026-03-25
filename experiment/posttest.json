@@ -2,7 +2,7 @@
   "version": 2.0,
   "questions": [
     {
-      "question": "What is the purpose of the recurrent connection in an RNN?",
+      "question": "1. What is the purpose of the recurrent connection in an RNN?",
       "answers": {
         "a": "To propagate the hidden state across different time steps",
         "b": "To adjust the weights and biases",
@@ -19,7 +19,7 @@
       "difficulty": "beginner"
     },
     {
-      "question": "What is the purpose of the initial hidden state in an RNN?",
+      "question": "2. What is the purpose of the initial hidden state in an RNN?",
       "answers": {
         "a": "To provide the starting point for the recurrent computation",
         "b": "To adjust the learning rate",
@@ -36,7 +36,7 @@
       "difficulty": "beginner"
     },
     {
-      "question": "How does the RNN handle sequential data?",
+      "question": "3. How does the RNN handle sequential data?",
       "answers": {
         "a": "Using a sliding window",
         "b": "Processing data point by point with memory of past inputs",
@@ -53,7 +53,7 @@
       "difficulty": "beginner"
     },
     {
-      "question": "In the context of RNNs, what does \"unrolling\" refer to?",
+      "question": "4. In the context of RNNs, what does \"unrolling\" refer to?",
       "answers": {
         "a": "Training with large batch size",
         "b": "Unfolding the RNN across time steps",
@@ -70,7 +70,7 @@
       "difficulty": "beginner"
     },
     {
-      "question": "What is the primary reason for visualizing sequence unrolling in RNNs?",
+      "question": "5. What is the primary reason for visualizing sequence unrolling in RNNs?",
       "answers": {
         "a": "To reduce model complexity",
         "b": "To understand how parameters change",
@@ -87,7 +87,7 @@
       "difficulty": "beginner"
     },
     {
-      "question": "What happens if the initial hidden state of an RNN is set to zero?",
+      "question": "6. What happens if the initial hidden state of an RNN is set to zero?",
       "answers": {
         "a": "The model cannot learn",
         "b": "The network starts without prior memory",
@@ -104,7 +104,7 @@
       "difficulty": "beginner"
     },
     {
-      "question": "Which visualization helps understand memory behaviour in RNNs?",
+      "question": "7. Which visualization helps understand memory behaviour in RNNs?",
       "answers": {
         "a": "Accuracy curve",
         "b": "Confusion matrix",
@@ -121,7 +121,7 @@
       "difficulty": "beginner"
     },
     {
-      "question": "During text generation, what is used as input after the first character?",
+      "question": "8. During text generation, what is used as input after the first character?",
       "answers": {
         "a": "Random noise",
         "b": "Original training data",
@@ -138,7 +138,7 @@
       "difficulty": "beginner"
     },
     {
-      "question": "What technique is used to train RNNs over multiple time steps?",
+      "question": "9. What technique is used to train RNNs over multiple time steps?",
       "answers": {
         "a": "Forward propagation",
         "b": "Gradient descent",
@@ -155,7 +155,7 @@
       "difficulty": "beginner"
     },
     {
-      "question": "What problem commonly occurs in vanilla RNNs when handling long sequences?",
+      "question": "10. What problem commonly occurs in vanilla RNNs when handling long sequences?",
       "answers": {
         "a": "Overfitting",
         "b": "Exploding memory",
