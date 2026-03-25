@@ -141,8 +141,9 @@ const RNNAnimation = {
                 <div class="rnn-formula-box">
                     <span class="rnn-formula-label">RNN Update Rule:</span>
                     <code class="rnn-formula-code">
-                        h<sub>t</sub> = tanh(W<sub>hh</sub>h<sub>t-1</sub> + W<sub>xh</sub>x<sub>t</sub> + b<sub>h</sub>)
+                        h<sub>t</sub> = tanh(<strong>W</strong>·h<sub>t-1</sub> + <strong>U</strong>·x<sub>t</sub> + <strong>b</strong>)
                     </code>
+                    <span class="rnn-formula-legend"><strong>W</strong>: recurrent weight &nbsp;|&nbsp; <strong>U</strong>: input weight &nbsp;|&nbsp; <strong>b</strong>: bias</span>
                 </div>
             </div>
             
@@ -156,7 +157,7 @@ const RNNAnimation = {
                 <div class="rnn-heatmap-container">
                     <div class="rnn-heatmap-header">
                         <h3>Hidden State Evolution</h3>
-                        <span class="rnn-heatmap-subtitle">h<sub>t</sub> ∈ ℝ<sup>${this.hiddenSize}</sup></span>
+                        <span class="rnn-heatmap-subtitle">h<sub>t</sub> ∈ ℝ<sup>${this.hiddenSize}</sup> &nbsp;|&nbsp; columns = timesteps (t) &nbsp;|&nbsp; rows = hidden dimensions (d)</span>
                     </div>
                     
                     <div class="rnn-heatmap-wrapper">
@@ -339,7 +340,8 @@ const RNNAnimation = {
         const displaySize = Math.min(8, this.hiddenSize);
         
         for (let i = 0; i < displaySize; i++) {
-            html += `<div class="rnn-heatmap-y-label">h<sub>${i}</sub></div>`;
+            // d_i = dimension i of the hidden state vector (not to be confused with h_t = hidden state at timestep t)
+            html += `<div class="rnn-heatmap-y-label" title="Dimension ${i} of the hidden state vector">d<sub>${i}</sub></div>`;
         }
         
         return html;
@@ -367,7 +369,7 @@ const RNNAnimation = {
                          data-step="${stepIdx}" 
                          data-unit="${unitIdx}"
                          style="background-color: ${color}"
-                         title="h[${unitIdx}] at t=${stepIdx}: ${value.toFixed(3)}">
+                         title="h_${stepIdx}[d${unitIdx}] = ${value.toFixed(3)}  (hidden state at t=${stepIdx}, dimension d${unitIdx})">
                         <span class="rnn-cell-value">${value.toFixed(2)}</span>
                     </div>
                 `;

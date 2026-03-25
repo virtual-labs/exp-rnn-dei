@@ -668,13 +668,21 @@
 /* Formula Box */
 .rnn-formula-box {
     display: inline-flex;
-    align-items: center;
-    gap: var(--spacing-md);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-xs);
     padding: var(--spacing-sm) var(--spacing-md);
     background: white;
     border-radius: var(--radius-sm);
     margin-top: var(--spacing-md);
     box-shadow: var(--shadow-sm);
+}
+
+.rnn-formula-legend {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    font-family: 'Fira Code', monospace;
+    opacity: 0.85;
 }
 
 .rnn-formula-label {
