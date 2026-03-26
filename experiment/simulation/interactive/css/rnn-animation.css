@@ -685,6 +685,16 @@
     opacity: 0.85;
 }
 
+.rnn-formula-note {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    font-style: italic;
+    opacity: 0.75;
+    border-top: 1px solid var(--border-color);
+    padding-top: var(--spacing-xs);
+    margin-top: 2px;
+}
+
 .rnn-formula-label {
     font-size: 0.8rem;
     color: var(--text-muted);

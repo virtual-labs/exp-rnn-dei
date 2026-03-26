@@ -143,7 +143,12 @@ const RNNAnimation = {
                     <code class="rnn-formula-code">
                         h<sub>t</sub> = tanh(<strong>W</strong>·h<sub>t-1</sub> + <strong>U</strong>·x<sub>t</sub> + <strong>b</strong>)
                     </code>
-                    <span class="rnn-formula-legend"><strong>W</strong>: recurrent weight &nbsp;|&nbsp; <strong>U</strong>: input weight &nbsp;|&nbsp; <strong>b</strong>: bias</span>
+                    <span class="rnn-formula-legend">
+                        <strong>W</strong> ∈ ℝ<sup>${this.hiddenSize}×${this.hiddenSize}</sup> (recurrent weight) &nbsp;|&nbsp;
+                        <strong>U</strong> ∈ ℝ<sup>${this.hiddenSize}×embed</sup> (input weight) &nbsp;|&nbsp;
+                        <strong>b</strong> ∈ ℝ<sup>${this.hiddenSize}</sup> (bias)
+                    </span>
+                    <span class="rnn-formula-note">Learned parameters from the trained character-level RNN (hidden size = ${this.hiddenSize}). Weights are shared across all timesteps.</span>
                 </div>
             </div>
             
