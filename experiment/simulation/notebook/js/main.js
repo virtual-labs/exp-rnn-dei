@@ -365,7 +365,7 @@ function handleStartTextChange(newValue) {
 function downloadExperiment() {
     // Download the experiment PDF
     const link = document.createElement('a');
-    link.href = './assets/Exp-6_Recurrent_Neural_Networks.pdf';
+    link.href = './assets/Exp_6_Recurrent_Neural_Networks.pdf';
     link.download = 'RNN_Experiment.pdf';
     document.body.appendChild(link);
     link.click();
