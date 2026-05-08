@@ -14,7 +14,7 @@ Unlike traditional feedforward neural networks, which assume inputs to be indepe
 
 #### Mathematical Representation of Recurrent Neural Network
 
-An RNN processes an input sequence one element at a time while maintaining a hidden state that captures information from previous time steps. At each time step $t$, the hidden state $H_t$ is updated using the current input $X_t$ and the hidden state from the previous time step $H_{t-1}$.
+An RNN processes an input sequence one element at a time while maintaining a hidden state that captures information from previous time steps. The process begins with an initial hidden state $H_0$, which is typically initialized to a vector of zeros or learned as a model parameter. At each subsequent time step $t \ge 1$, the hidden state $H_t$ is updated using the current input $X_t$ and the hidden state from the previous time step $H_{t-1}$.
 
 The hidden state update is given by:
 
@@ -45,7 +45,7 @@ This process is repeated across all time steps, with the same parameters $\{W_{x
 
 #### Time Unrolling and Parameter Sharing
 
-At an initial observation, the presence of cycles may appear to contradict the feedforward nature of neural networks, where computation flows strictly in one direction. However, RNNs resolve this apparent ambiguity through a precise formulation: the network is unrolled across time steps. In the unrolled representation, the RNN is transformed into a sequence of identical feedforward networks, one for each time step, where the same set of parameters is shared across all steps. This parameter sharing allows the model to generalize across sequences of varying lengths while maintaining temporal consistency.
+Upon initial observation, the presence of cycles may appear to contradict the feedforward nature of neural networks, where computation flows strictly in one direction. However, RNNs resolve this apparent ambiguity through a precise formulation: the network is unrolled across time steps. In the unrolled representation, the RNN is transformed into a sequence of identical feedforward networks, one for each time step, where the same set of parameters is shared across all steps. This parameter sharing allows the model to generalize across sequences of varying lengths while maintaining temporal consistency.
 
 ---
 
@@ -71,9 +71,9 @@ During the forward pass, the hidden states at each time step must be stored so t
 #### Merits of Recurrent Neural Networks
 
 - **Sequential Memory:**
-  RNNs retain information from previous inputs making them ideal for time-series predictions where past data is crucial. This makes them useful for tasks such as language modelling, where the meaning of a word depends on the context in which it appears.
+  RNNs retain information from previous inputs, making them ideal for time-series predictions where past data is crucial. This makes them useful for tasks such as language modelling, where the meaning of a word depends on the context in which it appears.
 
-- **Ability to handle variable-length sequences:**
+- **Variable-Length Sequences:**
   RNNs are designed to handle input sequences of variable length, which makes them well-suited for tasks such as speech recognition, natural language processing, and time-series analysis.
 
 - **Parameter Sharing:**
@@ -83,10 +83,10 @@ During the forward pass, the hidden states at each time step must be stored so t
 
 #### Demerits of Recurrent Neural Networks
 
-- **Vanishing Gradient:**
-  During backpropagation, gradients diminish as they pass through each time step, leading to minimal weight updates. This limits the RNN's ability to learn long-term dependencies which is crucial for tasks like language translation.
+- **Vanishing Gradients:**
+  During backpropagation, gradients diminish as they pass through each time step, leading to minimal weight updates. This limits the RNN's ability to learn long-term dependencies, which is crucial for tasks like language translation.
 
-- **Exploding Gradient:**
+- **Exploding Gradients:**
   Sometimes gradients grow uncontrollably, causing excessively large weight updates that destabilize training. This is the problem of exploding gradients in RNNs.
 
 - **Lack of Parallelism:**

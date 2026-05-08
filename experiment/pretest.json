@@ -2,7 +2,7 @@
   "version": 2.0,
   "questions": [
     {
-      "question": "1. What is the primary purpose of a Recurrent Neural Network (RNN)?",
+      "question": "1. Which one of the following tasks is most suitable for RNNs?",
       "answers": {
         "a": "Image classification",
         "b": "Text generation",
@@ -56,13 +56,13 @@
       "question": "4. What is the advantage of using recurrent layers in an RNN?",
       "answers": {
         "a": "They can capture temporal dependencies in the input data",
-        "b": "They can handle variable-length inputs",
+        "b": "They process all inputs simultaneously in parallel",
         "c": "They can generate synthetic data",
         "d": "They can handle non-linear transformations"
       },
       "explanations": {
         "a": "Correct because recurrent connections allow learning from past inputs.",
-        "b": "Incorrect because this is a property of sequence models but not the main advantage.",
+        "b": "Incorrect because RNNs process sequences sequentially, not in parallel.",
         "c": "Incorrect because data generation is an application, not an inherent advantage.",
         "d": "Incorrect because non-linearity comes from activation functions, not recurrence."
       },
@@ -87,52 +87,52 @@
       "difficulty": "beginner"
     },
     {
-      "question": "6. Which activation function is commonly used in the recurrent layers of an RNN?",
+      "question": "6. Why do Recurrent Neural Networks (RNNs) share parameters across time steps?",
       "answers": {
-        "a": "ReLU",
-        "b": "Sigmoid",
-        "c": "Tanh (Hyperbolic Tangent)",
-        "d": "Softmax"
+        "a": "To allow the model to learn different features at each step",
+        "b": "To increase the total number of learnable parameters",
+        "c": "To enable the network to generalize across sequences of varying lengths",
+        "d": "To eliminate the need for an activation function"
       },
       "explanations": {
-        "a": "Incorrect because ReLU is less stable for recurrent connections.",
-        "b": "Incorrect because sigmoid is mainly used in gates, not vanilla RNNs.",
-        "c": "Correct because tanh keeps values bounded and centred.",
-        "d": "Incorrect because softmax is used in output layers."
+        "a": "Incorrect because sharing parameters means applying the same feature extraction everywhere.",
+        "b": "Incorrect because parameter sharing drastically reduces the total number of parameters.",
+        "c": "Correct because applying the same weights at every step allows the model to handle sequences of any length.",
+        "d": "Incorrect because activation functions are still needed for non-linearity."
       },
       "correctAnswer": "c",
       "difficulty": "beginner"
     },
     {
-      "question": "7. What is the purpose of the time step parameter in an RNN?",
+      "question": "7. What does the number of time steps in an unrolled RNN correspond to?",
       "answers": {
-        "a": "To determine the number of recurrent layers",
-        "b": "To adjust the learning rate",
-        "c": "To specify the length of the input sequence",
-        "d": "None of the above"
+        "a": "The number of hidden layers in the network",
+        "b": "The total number of parameters in the network",
+        "c": "The length of the input sequence being processed",
+        "d": "The number of output classes"
       },
       "explanations": {
-        "a": "Incorrect because layers and time steps are different concepts.",
-        "b": "Incorrect because learning rate is independent of time steps.",
-        "c": "Correct because time steps define how many sequence elements are processed.",
-        "d": "Incorrect because option (c) is correct."
+        "a": "Incorrect because unrolling creates a sequence of identical layers, not deep hidden layers.",
+        "b": "Incorrect because parameters are shared, so the number of parameters doesn't scale with time steps.",
+        "c": "Correct because an RNN is unrolled once for each element in the input sequence.",
+        "d": "Incorrect because the output classes are determined by the output layer, independent of time steps."
       },
       "correctAnswer": "c",
       "difficulty": "beginner"
     },
     {
-      "question": "8. Which layer type is commonly used to initialize the hidden state in an RNN?",
+      "question": "8. What is a common challenge when training standard Recurrent Neural Networks on very long sequences?",
       "answers": {
-        "a": "Input layer",
-        "b": "Hidden layer",
-        "c": "Output layer",
-        "d": "Activation layer"
+        "a": "The network learns to process data too quickly",
+        "b": "The vanishing or exploding gradient problem",
+        "c": "The inability to use any activation functions",
+        "d": "The requirement to have a fixed input size"
       },
       "explanations": {
-        "a": "Incorrect because input layer does not initialize memory.",
-        "b": "Correct because the hidden state belongs to the hidden layer and is initialized at the start of sequence processing.",
-        "c": "Incorrect because output layer does not manage memory.",
-        "d": "Incorrect because activation layers only apply non-linearity."
+        "a": "Incorrect because training on long sequences typically slows down the process.",
+        "b": "Correct because gradients can diminish or grow uncontrollably when backpropagated through many time steps.",
+        "c": "Incorrect because activation functions are still used.",
+        "d": "Incorrect because RNNs naturally handle variable-length inputs."
       },
       "correctAnswer": "b",
       "difficulty": "beginner"

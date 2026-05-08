@@ -1,12 +1,12 @@
 ### Procedure
 
-The objective of this part of the experiment is to implement a vanilla Recurrent Neural Network (RNN) for character-level sequence modelling. The Tiny Shakespeare dataset is used, where individual characters from a text corpus are learned to model sequential dependencies and generate coherent text. This part focuses on understanding sequence unrolling, hidden-state propagation across time steps, and the training of RNNs using Backpropagation Through Time (BPTT), along with visualizing the evolution of hidden states during text generation.
+The objective of this part of the experiment is to implement a vanilla Recurrent Neural Network (RNN) for character-level sequence modelling. The Tiny Shakespeare dataset is used, where the model learns from individual characters in a text corpus to capture sequential dependencies and generate coherent text. This part focuses on understanding sequence unrolling, hidden-state propagation across time steps, and the training of RNNs using Backpropagation Through Time (BPTT), along with visualizing the evolution of hidden states during text generation.
 
 ---
 
 #### 1. Import Required Libraries
 
-Import necessary Python libraries such as PyTorch, Numpy, and Matplotlib for model implementation, numerical operations, and visualizations.
+Import necessary Python libraries such as PyTorch, NumPy, and Matplotlib for model implementation, numerical operations, and visualizations.
 
 ---
 
@@ -16,7 +16,7 @@ The Tiny Shakespeare dataset is a character-level text corpus containing a small
 
 - Each character (letters, digits, punctuation, spaces) is treated as an individual token.
 - The dataset is suitable for sequence modelling and text generation tasks.
-- The text file is downloaded and loaded into memory for further pre-processing.
+- The text file is downloaded and loaded into memory for further preprocessing.
 
 The successful loading of the dataset is verified.
 
@@ -42,7 +42,7 @@ This ensures proper training and evaluation of the model.
 
 ---
 
-#### 5. Hyper-parameter Initialization
+#### 5. Hyperparameter Initialization
 
 Initialize training parameters such as:
 
@@ -66,7 +66,7 @@ Create mini-batches of input sequences and corresponding target sequences using 
 
 #### 7. RNN Model Definition
 
-Define a Character-level RNN model consisting of:
+Define a character-level RNN model consisting of:
 
 - An Embedding layer to convert character indices into dense vectors
 - A multi-layer vanilla RNN to process sequential data

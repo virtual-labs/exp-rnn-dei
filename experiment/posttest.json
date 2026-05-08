@@ -36,7 +36,7 @@
       "difficulty": "beginner"
     },
     {
-      "question": "3. How does the RNN handle sequential data?",
+      "question": "3. How does the RNN model handle sequential data?",
       "answers": {
         "a": "Using a sliding window",
         "b": "Processing data point by point with memory of past inputs",
@@ -141,13 +141,13 @@
       "question": "9. What technique is used to train RNNs over multiple time steps?",
       "answers": {
         "a": "Forward propagation",
-        "b": "Gradient descent",
+        "b": "Batch Normalization",
         "c": "Dropout",
         "d": "Backpropagation Through Time (BPTT)"
       },
       "explanations": {
         "a": "Incorrect because forward propagation only computes outputs.",
-        "b": "Incorrect because gradient descent is an optimizer, not a sequence-specific method.",
+        "b": "Incorrect because Batch Normalization is a technique to improve training stability, not a sequence-specific method.",
         "c": "Incorrect because dropout is a regularization technique.",
         "d": "Correct because BPTT propagates gradients across time steps."
       },
