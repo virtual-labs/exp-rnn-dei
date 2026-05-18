@@ -1,0 +1,175 @@
+{
+  "version": 2.0,
+  "questions": [
+    {
+      "question": "1. Which one of the following tasks is most suitable for RNNs?",
+      "answers": {
+        "a": "Image classification",
+        "b": "Text generation",
+        "c": "Reinforcement learning",
+        "d": "Object detection"
+      },
+      "explanations": {
+        "a": "Incorrect because image classification is mainly handled by CNNs.",
+        "b": "Correct because RNNs are widely used for sequence tasks such as text generation.",
+        "c": "Incorrect because reinforcement learning is a learning paradigm, not a primary RNN purpose.",
+        "d": "Incorrect because object detection is a computer vision task."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "2. What is the main characteristic of a Recurrent Neural Network (RNN)?",
+      "answers": {
+        "a": "It processes data sequentially and has loops in its architecture",
+        "b": "It processes data in parallel and has no loops",
+        "c": "It uses a single-layer architecture",
+        "d": "It is designed for image classification"
+      },
+      "explanations": {
+        "a": "Correct because feedback loops enable sequence modelling.",
+        "b": "Incorrect because that describes feedforward networks.",
+        "c": "Incorrect because RNNs can have multiple layers.",
+        "d": "Incorrect because CNNs are used for images."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "3. Which layer type is typically used to capture sequential dependencies in an RNN?",
+      "answers": {
+        "a": "Input layer",
+        "b": "Hidden layer",
+        "c": "Output layer",
+        "d": "Activation layer"
+      },
+      "explanations": {
+        "a": "Incorrect because the input layer only receives data.",
+        "b": "Correct because the hidden layer maintains memory across time steps.",
+        "c": "Incorrect because the output layer produces predictions, not dependencies.",
+        "d": "Incorrect because activation layers add non-linearity but do not store sequence information."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "4. What is the advantage of using recurrent layers in an RNN?",
+      "answers": {
+        "a": "They can capture temporal dependencies in the input data",
+        "b": "They process all inputs simultaneously in parallel",
+        "c": "They can generate synthetic data",
+        "d": "They can handle non-linear transformations"
+      },
+      "explanations": {
+        "a": "Correct because recurrent connections allow learning from past inputs.",
+        "b": "Incorrect because RNNs process sequences sequentially, not in parallel.",
+        "c": "Incorrect because data generation is an application, not an inherent advantage.",
+        "d": "Incorrect because non-linearity comes from activation functions, not recurrence."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "5. What is the purpose of the hidden state in an RNN?",
+      "answers": {
+        "a": "To store the information from the previous time step",
+        "b": "To adjust the learning rate during training",
+        "c": "To compute the gradients for backpropagation",
+        "d": "None of the above"
+      },
+      "explanations": {
+        "a": "Correct because hidden state carries memory forward.",
+        "b": "Incorrect because learning rate is controlled by the optimizer.",
+        "c": "Incorrect because gradients are computed during backpropagation.",
+        "d": "Incorrect because option (a) is correct."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "6. Why do Recurrent Neural Networks (RNNs) share parameters across time steps?",
+      "answers": {
+        "a": "To allow the model to learn different features at each step",
+        "b": "To increase the total number of learnable parameters",
+        "c": "To enable the network to generalize across sequences of varying lengths",
+        "d": "To eliminate the need for an activation function"
+      },
+      "explanations": {
+        "a": "Incorrect because sharing parameters means applying the same feature extraction everywhere.",
+        "b": "Incorrect because parameter sharing drastically reduces the total number of parameters.",
+        "c": "Correct because applying the same weights at every step allows the model to handle sequences of any length.",
+        "d": "Incorrect because activation functions are still needed for non-linearity."
+      },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "7. What does the number of time steps in an unrolled RNN correspond to?",
+      "answers": {
+        "a": "The number of hidden layers in the network",
+        "b": "The total number of parameters in the network",
+        "c": "The length of the input sequence being processed",
+        "d": "The number of output classes"
+      },
+      "explanations": {
+        "a": "Incorrect because unrolling creates a sequence of identical layers, not deep hidden layers.",
+        "b": "Incorrect because parameters are shared, so the number of parameters doesn't scale with time steps.",
+        "c": "Correct because an RNN is unrolled once for each element in the input sequence.",
+        "d": "Incorrect because the output classes are determined by the output layer, independent of time steps."
+      },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "8. What is a common challenge when training standard Recurrent Neural Networks on very long sequences?",
+      "answers": {
+        "a": "The network learns to process data too quickly",
+        "b": "The vanishing or exploding gradient problem",
+        "c": "The inability to use any activation functions",
+        "d": "The requirement to have a fixed input size"
+      },
+      "explanations": {
+        "a": "Incorrect because training on long sequences typically slows down the process.",
+        "b": "Correct because gradients can diminish or grow uncontrollably when backpropagated through many time steps.",
+        "c": "Incorrect because activation functions are still used.",
+        "d": "Incorrect because RNNs naturally handle variable-length inputs."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "9. What is the main difference between an RNN and a feedforward neural network?",
+      "answers": {
+        "a": "RNN uses convolution layers",
+        "b": "RNN has feedback connections",
+        "c": "RNN has no hidden layers",
+        "d": "RNN works only on images"
+      },
+      "explanations": {
+        "a": "Incorrect because convolution layers are used in CNNs, not RNNs.",
+        "b": "Correct because RNNs contain recurrent (feedback) connections that allow information to persist across time steps.",
+        "c": "Incorrect because RNNs can have one or more hidden layers.",
+        "d": "Incorrect because RNNs are mainly used for sequential data such as text and time series."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "10. What dataset is commonly used for character-level language modeling demonstrations?",
+      "answers": {
+        "a": "MNIST",
+        "b": "CIFAR-10",
+        "c": "ImageNet",
+        "d": "Tiny Shakespeare"
+      },
+      "explanations": {
+        "a": "Incorrect because MNIST is a handwritten digit image dataset, not used for text modeling.",
+        "b": "Incorrect because CIFAR-10 is an image classification dataset.",
+        "c": "Incorrect because ImageNet is used for large-scale image recognition tasks.",
+        "d": "Correct because Tiny Shakespeare is widely used for character-level language modeling with RNNs."
+      },
+      "correctAnswer": "d",
+      "difficulty": "beginner"
+    }
+  ]
+}

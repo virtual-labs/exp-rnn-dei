@@ -1,0 +1,889 @@
+/* ===================================
+   RNN Interactive Playground — CSS
+   =================================== */
+
+:root {
+    --bg: #fafafa;
+    --surface: #ffffff;
+    --border: #e5e7eb;
+    --text: #1a1a2e;
+    --text-muted: #6b7280;
+    --accent: #6366f1;
+    --accent-light: #818cf8;
+    --accent-bg: #eef2ff;
+    --danger: #ef4444;
+    --success: #22c55e;
+    --warning: #f59e0b;
+    --rnn-color: #8b5cf6;
+    --hidden-color: #3b82f6;
+    --input-color: #10b981;
+    --radius: 8px;
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --mono: 'Fira Code', 'Consolas', monospace;
+    --nav-h: 48px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+/* ─── Tab Navigation ─── */
+.tab-navigation {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 1.5rem;
+    height: var(--nav-h);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.tab-navigation .logo {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-right: 1.5rem;
+    white-space: nowrap;
+}
+
+.tab-navigation .logo span {
+    color: var(--accent);
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    padding: 0 1rem;
+    height: var(--nav-h);
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s;
+    white-space: nowrap;
+    font-family: var(--font);
+}
+
+.tab-btn:hover {
+    color: var(--text);
+}
+
+.tab-btn.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+}
+
+/* ─── Back Button ─── */
+.btn-back {
+    margin-left: auto;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 1rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--accent);
+    background: var(--accent-bg);
+    border: 1px solid var(--accent);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    height: auto;
+    font-family: var(--font);
+}
+
+.btn-back:hover {
+    background: var(--accent);
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+}
+
+/* ─── Main Content ─── */
+.main-content {
+    height: calc(100vh - var(--nav-h));
+    overflow: hidden;
+}
+
+.tab-content {
+    display: none;
+    padding: 0.75rem 1rem;
+    height: 100%;
+    overflow: hidden;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* ─── Glass Panel ─── */
+.glass-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+/* ─── Simulation Layout — Fit viewport ─── */
+.sim-layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 0.75rem;
+    height: 100%;
+    overflow: hidden;
+}
+
+.sim-sidebar {
+    padding: 1rem;
+    overflow-y: auto;
+    height: 100%;
+}
+
+.sim-sidebar h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+}
+
+.sim-sidebar h3 {
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin: 0.6rem 0 0.3rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.sim-sidebar p {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+}
+
+.sim-main {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* ─── Control Groups ─── */
+.control-group {
+    margin-bottom: 0.5rem;
+}
+
+.control-group label {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-bottom: 0.15rem;
+}
+
+.control-group input[type="range"] {
+    width: 100%;
+    accent-color: var(--accent);
+    height: 4px;
+}
+
+.control-group select {
+    width: 100%;
+    padding: 0.3rem 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 0.78rem;
+    font-family: var(--font);
+    background: var(--surface);
+    color: var(--text);
+}
+
+.control-row {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 0.25rem;
+}
+
+.control-row .value {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--accent);
+    min-width: 2.5rem;
+    text-align: right;
+    font-family: var(--mono);
+}
+
+/* ─── Buttons ─── */
+.btn {
+    padding: 0.35rem 0.85rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: var(--font);
+    transition: all 0.15s;
+    background: var(--surface);
+    color: var(--text);
+}
+
+.btn:hover {
+    border-color: var(--text);
+}
+
+.btn-primary {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+}
+
+.btn-primary:hover {
+    background: var(--accent-light);
+    border-color: var(--accent-light);
+}
+
+.btn-danger {
+    background: #fff;
+    color: var(--danger);
+    border-color: var(--danger);
+}
+
+.btn-danger:hover {
+    background: #fef2f2;
+}
+
+.btn-group {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+}
+
+/* ─── Canvas Container ─── */
+.canvas-container {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    position: relative;
+    flex: 1;
+    min-height: 0;
+}
+
+.canvas-container canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* ─── Sim1: Time Unrolling ─── */
+.sim1-workspace {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1;
+    min-height: 0;
+}
+
+.sim1-workspace .canvas-container {
+    flex: 1;
+}
+
+.sim1-workspace .info-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    flex: 0 0 auto;
+}
+
+/* ─── Sim2: Hidden State Heatmap ─── */
+.sim2-workspace {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 0.5rem;
+    flex: 1;
+    min-height: 0;
+}
+
+.sim2-workspace .canvas-container {
+    flex: none;
+}
+
+.sim2-right {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.neuron-info-panel {
+    padding: 0.75rem;
+}
+
+.neuron-info-panel h4 {
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+}
+
+.neuron-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--accent);
+    text-align: center;
+    font-family: var(--mono);
+    padding: 0.5rem 0;
+}
+
+.neuron-label {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+/* ─── Sim3: Sequence Learning ─── */
+.sim3-workspace {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    flex: 1;
+    min-height: 0;
+}
+
+.sim3-workspace .stream-panel {
+    display: flex;
+    flex-direction: column;
+    padding: 0.75rem;
+    overflow: hidden;
+}
+
+.sim3-workspace .stream-panel h4 {
+    font-size: 0.78rem;
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.stream-content {
+    flex: 1;
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    overflow-y: auto;
+    padding: 0.5rem;
+    background: #f8f9fb;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    line-height: 1.8;
+}
+
+.prediction-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.pred-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.72rem;
+}
+
+.pred-bar-label {
+    min-width: 2rem;
+    font-family: var(--mono);
+    font-weight: 600;
+    text-align: right;
+}
+
+.pred-bar-track {
+    flex: 1;
+    height: 14px;
+    background: #e5e7eb;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.pred-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+.pred-bar-value {
+    min-width: 2.5rem;
+    font-family: var(--mono);
+    color: var(--text-muted);
+    font-size: 0.68rem;
+}
+
+/* ─── Loss Chart Row ─── */
+.loss-chart-row {
+    flex: 0 0 180px;
+}
+
+.loss-chart-row .chart-box {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.loss-chart-row .chart-box .chart-wrap {
+    flex: 1;
+    min-height: 0;
+    position: relative;
+}
+
+.loss-chart-row .chart-box .chart-wrap canvas {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* ─── Charts Area ─── */
+.chart-box {
+    padding: 0.75rem;
+}
+
+.chart-box h4 {
+    font-size: 0.78rem;
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+}
+
+/* ─── Tooltip ─── */
+.rnn-tooltip {
+    position: absolute;
+    background: rgba(30, 30, 50, 0.95);
+    color: #fff;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-family: var(--mono);
+    pointer-events: none;
+    z-index: 200;
+    white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: opacity 0.15s;
+}
+
+/* ─── Status Bar ─── */
+.status-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.35rem 0.75rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    flex: 0 0 auto;
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #d1d5db;
+}
+
+.status-dot.running {
+    background: var(--success);
+    animation: pulse 1s infinite;
+}
+
+.status-dot.paused {
+    background: var(--warning);
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.4;
+    }
+}
+
+/* ─── Observe box ─── */
+.observe-box {
+    padding: 0.6rem 0.75rem;
+}
+
+.observe-box h4 {
+    font-size: 0.75rem;
+    margin-bottom: 0.25rem;
+}
+
+.observe-box ul {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    padding-left: 1rem;
+    line-height: 1.6;
+}
+
+/* ─── Toggle Switch ─── */
+.toggle-switch {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 0.35rem;
+}
+
+.toggle-switch input[type="checkbox"] {
+    appearance: none;
+    width: 32px;
+    height: 18px;
+    background: #d1d5db;
+    border-radius: 9px;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.2s;
+    flex-shrink: 0;
+}
+
+.toggle-switch input[type="checkbox"]::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 14px;
+    height: 14px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.2s;
+}
+
+.toggle-switch input[type="checkbox"]:checked {
+    background: var(--accent);
+}
+
+.toggle-switch input[type="checkbox"]:checked::after {
+    transform: translateX(14px);
+}
+
+.toggle-label {
+    font-size: 0.78rem;
+    font-weight: 500;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 1200px) {
+    .sim2-workspace {
+        grid-template-columns: 1fr;
+    }
+
+    .sim3-workspace {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 900px) {
+    .sim-layout {
+        grid-template-columns: 1fr;
+        height: auto;
+        overflow: auto;
+    }
+
+    .sim-sidebar {
+        height: auto;
+    }
+
+    .main-content {
+        height: auto;
+        overflow: auto;
+    }
+
+    .tab-content {
+        height: auto;
+        overflow: auto;
+    }
+
+    .tab-navigation {
+        overflow-x: auto;
+    }
+}
+
+@media (max-width: 600px) {
+    .tab-content {
+        padding: 0.5rem;
+    }
+
+    .tab-btn {
+        font-size: 0.72rem;
+        padding: 0 0.5rem;
+    }
+}
+
+/* ============================================
+   Sim 1: RNN Animation Overrides
+   Make the notebook animation compact for the
+   interactive playground viewport.
+   ============================================ */
+
+/* Missing CSS variables needed by rnn-animation.css */
+.sim1-animation-wrapper {
+    --spacing-xs: 0.15rem;
+    --spacing-sm: 0.3rem;
+    --spacing-md: 0.5rem;
+    --spacing-lg: 0.75rem;
+    --spacing-xl: 1rem;
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 8px;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 2px 6px rgba(0, 0, 0, 0.08);
+    --bg-secondary: #f3f4f6;
+    --bg-tertiary: #e5e7eb;
+    --border-color: #e5e7eb;
+    --text-primary: #1a1a2e;
+    --text-secondary: #4b5563;
+    --text-muted: #6b7280;
+
+    /* Fill main area, scroll internally */
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0.5rem;
+}
+
+/* ── Compact header ── */
+.sim1-animation-wrapper .rnn-animation-header {
+    margin-bottom: 0.4rem;
+}
+
+.sim1-animation-wrapper .rnn-animation-header h2 {
+    font-size: 1rem;
+    margin-bottom: 0.1rem;
+}
+
+.sim1-animation-wrapper .rnn-animation-header p {
+    font-size: 0.75rem;
+}
+
+/* ── Compact controls ── */
+.sim1-animation-wrapper .rnn-controls {
+    gap: 0.5rem;
+    padding: 0.35rem 0.6rem;
+    margin-bottom: 0.4rem;
+}
+
+.sim1-animation-wrapper .rnn-btn {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+}
+
+.sim1-animation-wrapper .rnn-step-slider {
+    width: 100px;
+}
+
+.sim1-animation-wrapper .rnn-step-value {
+    min-width: 45px;
+    font-size: 0.75rem;
+}
+
+.sim1-animation-wrapper .rnn-speed-btn {
+    padding: 0.15rem 0.35rem;
+    font-size: 0.65rem;
+}
+
+.sim1-animation-wrapper .rnn-status {
+    font-size: 0.72rem;
+}
+
+/* ── Compact visualization ── */
+.sim1-animation-wrapper .rnn-visualization {
+    padding: 0.5rem;
+    margin-bottom: 0.4rem;
+}
+
+.sim1-animation-wrapper .rnn-viz-label {
+    margin-bottom: 0.3rem;
+}
+
+.sim1-animation-wrapper .rnn-viz-label span {
+    font-size: 0.82rem;
+}
+
+.sim1-animation-wrapper .rnn-viz-sublabel {
+    font-size: 0.72rem;
+}
+
+/* ── Compact cells ── */
+.sim1-animation-wrapper .rnn-cell-block {
+    width: 65px;
+    padding: 0.3rem;
+}
+
+.sim1-animation-wrapper .rnn-cell-title {
+    font-size: 0.78rem;
+}
+
+.sim1-animation-wrapper .rnn-cell-subtitle {
+    font-size: 0.55rem;
+}
+
+.sim1-animation-wrapper .rnn-input-label,
+.sim1-animation-wrapper .rnn-output-label {
+    padding: 0.15rem 0.35rem;
+    font-size: 0.7rem;
+}
+
+.sim1-animation-wrapper .rnn-data-flow {
+    height: 12px;
+}
+
+.sim1-animation-wrapper .rnn-arrow-container {
+    min-width: 40px;
+    margin: 0 -0.1rem;
+}
+
+.sim1-animation-wrapper .rnn-arrow-svg {
+    width: 40px;
+    height: 28px;
+}
+
+/* Scale arrow SVG content to fit the smaller container */
+.sim1-animation-wrapper .rnn-arrow-container svg {
+    overflow: visible;
+}
+
+.sim1-animation-wrapper .rnn-arrow-label {
+    font-size: 0.6rem;
+}
+
+.sim1-animation-wrapper .rnn-hidden-preview {
+    margin-top: 0.1rem;
+}
+
+.sim1-animation-wrapper .rnn-hidden-mini-cell {
+    width: 7px;
+    height: 7px;
+}
+
+.sim1-animation-wrapper .rnn-sequence-wrapper {
+    padding: 0.25rem 0;
+}
+
+.sim1-animation-wrapper .rnn-sequence {
+    padding: 0.25rem;
+}
+
+/* ── Compact formula ── */
+.sim1-animation-wrapper .rnn-formula-box {
+    padding: 0.25rem 0.5rem;
+    margin-top: 0.3rem;
+    font-size: 0.72rem;
+}
+
+.sim1-animation-wrapper .rnn-formula-label {
+    font-size: 0.68rem;
+}
+
+.sim1-animation-wrapper .rnn-formula-code {
+    font-size: 0.72rem;
+}
+
+/* ── Compact explanation ── */
+.sim1-animation-wrapper .rnn-step-explanation {
+    padding: 0.5rem 0.6rem;
+    margin-top: 0.35rem;
+}
+
+.sim1-animation-wrapper .rnn-explanation-header {
+    margin-bottom: 0.2rem;
+}
+
+.sim1-animation-wrapper .rnn-step-badge {
+    font-size: 0.65rem;
+    padding: 0.1rem 0.35rem;
+}
+
+.sim1-animation-wrapper .rnn-explanation-text {
+    font-size: 0.75rem;
+    line-height: 1.45;
+}
+
+/* ── Compact heatmap ── */
+.sim1-animation-wrapper .rnn-heatmap-section {
+    margin-top: 0.5rem;
+}
+
+.sim1-animation-wrapper .rnn-heatmap-container {
+    padding: 0.5rem;
+}
+
+.sim1-animation-wrapper .rnn-heatmap-header {
+    margin-bottom: 0.35rem;
+}
+
+.sim1-animation-wrapper .rnn-heatmap-header h3 {
+    font-size: 0.85rem;
+}
+
+.sim1-animation-wrapper .rnn-heatmap-cell {
+    width: 36px;
+    height: 24px;
+    font-size: 0.55rem;
+}
+
+/* Match y-label height to cell height + gap */
+.sim1-animation-wrapper .rnn-heatmap-y-labels {
+    padding-top: 0;
+    gap: 4px;
+}
+
+.sim1-animation-wrapper .rnn-heatmap-y-label {
+    height: 24px;
+    font-size: 0.6rem;
+    min-width: 24px;
+}
+
+/* Match x-label grid to the heatmap grid precisely */
+.sim1-animation-wrapper .rnn-heatmap-x-labels {
+    padding-left: 32px;
+}
+
+.sim1-animation-wrapper .rnn-heatmap-x-label {
+    font-size: 0.6rem;
+}
+
+/* Ensure the heatmap wrapper gap matches */
+.sim1-animation-wrapper .rnn-heatmap-wrapper {
+    gap: 4px;
+}
+
+.sim1-animation-wrapper .rnn-legend-gradient {
+    height: 8px;
+}
+
+.sim1-animation-wrapper .rnn-heatmap-legend {
+    font-size: 0.6rem;
+}

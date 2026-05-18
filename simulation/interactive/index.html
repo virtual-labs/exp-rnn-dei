@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RNN Interactive Playground</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/rnn-animation.css">
+    <link rel="stylesheet" href="./css/simulations.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+
+<body>
+    <!-- Tab Navigation -->
+    <nav class="tab-navigation">
+        <div class="logo">RNN <span>Simulator</span></div>
+        <button class="tab-btn active" data-tab="sim1">1. Time Unrolling</button>
+        <button class="tab-btn" data-tab="sim2">2. Hidden State Lab</button>
+        <button class="tab-btn" data-tab="sim3">3. Sequence Learning</button>
+        <a href="../index.html" class="btn-back">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 12H5" />
+                <path d="M12 19l-7-7 7-7" />
+            </svg>
+            Back to Home
+        </a>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+        <!-- ─── SIM 1: Time Unrolling (Existing RNN Animation) ─── -->
+        <div id="sim1" class="tab-content active">
+            <div class="sim-layout">
+                <aside class="sim-sidebar glass-panel">
+                    <h2>Sequence Unrolling</h2>
+                    <p>See how a single RNN cell is reused across every timestep — the same weights process each input
+                        character sequentially while passing hidden state forward.</p>
+
+                    <h3>Key Concepts</h3>
+                    <div class="observe-box glass-panel">
+                        <ul>
+                            <li>Each RNN cell shares <strong>identical</strong> weights W, U, b</li>
+                            <li><strong>W</strong> (recurrent weight): multiplies the previous hidden state h<sub>t-1</sub></li>
+                            <li><strong>U</strong> (input weight): multiplies the current input x<sub>t</sub></li>
+                            <li><strong>b</strong> (bias): a learned offset added at each step</li>
+                            <li>Hidden state h<sub>t</sub> flows left → right as a memory chain</li>
+                            <li>At each step: <code>h<sub>t</sub> = tanh(W·h<sub>t-1</sub> + U·x<sub>t</sub> + b)</code></li>
+                        </ul>
+                    </div>
+
+                    <h3>How to Use</h3>
+                    <div class="observe-box glass-panel">
+                        <ul>
+                            <li>Press <strong>Play</strong> to animate the sequence processing</li>
+                            <li>Use the <strong>Step slider</strong> to jump to any timestep</li>
+                            <li>Adjust <strong>Speed</strong> (0.5x, 1x, 2x)</li>
+                            <li>The <strong>heatmap</strong> below shows hidden state values at each timestep — columns = timesteps, rows = hidden dimensions (d<sub>0</sub>…d<sub>n-1</sub>)</li>
+                        </ul>
+                    </div>
+
+                    <h3>What to Observe</h3>
+                    <div class="observe-box glass-panel">
+                        <ul>
+                            <li>The <strong>active cell</strong> pulses and shows internal operations (Embed → tanh →
+                                Linear)</li>
+                            <li>Hidden state preview mini-cells show activation patterns</li>
+                            <li>The heatmap reveals which dimensions are most active at each timestep</li>
+                            <li>Blue = negative, Orange = positive activations</li>
+                        </ul>
+                    </div>
+                </aside>
+
+                <div class="sim-main">
+                    <div class="sim1-animation-wrapper" id="rnnAnimationSection">
+                        <!-- RNNAnimation.init() renders here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── SIM 2: Hidden State Evolution ─── -->
+        <div id="sim2" class="tab-content">
+            <div class="sim-layout">
+                <aside class="sim-sidebar glass-panel">
+                    <h2>Hidden State Lab</h2>
+                    <p>A hidden state is a vector of neuron activations — a distributed memory. Watch it change as new
+                        inputs arrive.</p>
+
+                    <h3>Controls</h3>
+
+                    <div class="control-group">
+                        <div class="control-row">
+                            <label>Hidden Size</label>
+                            <span class="value" id="sim2HiddenSizeVal">8</span>
+                        </div>
+                        <input type="range" id="sim2HiddenSize" min="4" max="16" value="8">
+                    </div>
+
+                    <div class="control-group">
+                        <label>Activation</label>
+                        <select id="sim2Activation">
+                            <option value="tanh">tanh</option>
+                            <option value="relu">ReLU</option>
+                        </select>
+                    </div>
+
+                    <div class="btn-group" style="margin-top: 0.75rem;">
+                        <button class="btn btn-primary" id="sim2Auto">▶ Auto</button>
+                        <button class="btn" id="sim2Step">Step</button>
+                        <button class="btn" id="sim2Noise">+ Noise</button>
+                        <button class="btn btn-danger" id="sim2Reset">Reset</button>
+                    </div>
+
+                    <h3>Observe</h3>
+                    <div class="observe-box glass-panel">
+                        <ul>
+                            <li>Each square = one neuron's activation</li>
+                            <li>Blue = negative, Red = positive</li>
+                            <li>Click a neuron to track its value</li>
+                            <li>Try adding noise to see recovery</li>
+                        </ul>
+                    </div>
+                </aside>
+
+                <div class="sim-main">
+                    <div class="sim2-workspace">
+                        <div class="canvas-container glass-panel">
+                            <canvas id="sim2Canvas"></canvas>
+                        </div>
+
+                        <div class="sim2-right">
+                            <div class="neuron-info-panel glass-panel">
+                                <h4>Selected Neuron</h4>
+                                <div class="neuron-value" id="sim2NeuronValue">—</div>
+                                <div class="neuron-label" id="sim2NeuronLabel">Click a neuron</div>
+                            </div>
+
+                            <div class="chart-box glass-panel" style="flex: 1; min-height: 0;">
+                                <h4>Activation History</h4>
+                                <div class="chart-wrap" style="position: relative; flex: 1; min-height: 0;">
+                                    <canvas id="sim2Chart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="status-bar">
+                        <div class="status-dot" id="sim2StatusDot"></div>
+                        <span id="sim2StepCount">Step: 0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── SIM 3: Sequence Learning ─── -->
+        <div id="sim3" class="tab-content">
+            <div class="sim-layout">
+                <aside class="sim-sidebar glass-panel">
+                    <h2>Sequence Learning</h2>
+                    <p>Watch a toy RNN learn temporal patterns. See how hidden size, learning rate, and task complexity
+                        affect learning.</p>
+
+                    <h3>Task</h3>
+                    <div class="control-group">
+                        <select id="sim3Task">
+                            <option value="nextnum">Next Number Prediction</option>
+                            <option value="repeat">Repeating Pattern</option>
+                            <option value="charpredict">Character Prediction</option>
+                            <option value="grammar">Simple Grammar</option>
+                        </select>
+                    </div>
+
+                    <h3>Hyperparameters</h3>
+
+                    <div class="control-group">
+                        <div class="control-row">
+                            <label>Learning Rate</label>
+                            <span class="value" id="sim3LrVal">0.010</span>
+                        </div>
+                        <input type="range" id="sim3Lr" min="0.001" max="0.1" step="0.001" value="0.01">
+                    </div>
+
+                    <div class="control-group">
+                        <div class="control-row">
+                            <label>Hidden Size</label>
+                            <span class="value" id="sim3HiddenVal">8</span>
+                        </div>
+                        <input type="range" id="sim3Hidden" min="4" max="32" value="8">
+                    </div>
+
+                    <div class="control-group">
+                        <div class="control-row">
+                            <label>Max Epochs</label>
+                            <span class="value" id="sim3EpochsVal">0/50</span>
+                        </div>
+                        <input type="range" id="sim3Epochs" min="20" max="200" step="10" value="50">
+                    </div>
+
+                    <div class="btn-group" style="margin-top: 0.75rem;">
+                        <button class="btn btn-primary" id="sim3Start">▶ Start Training</button>
+                        <button class="btn btn-danger" id="sim3Reset">Reset</button>
+                    </div>
+                </aside>
+
+                <div class="sim-main">
+                    <div class="sim3-workspace">
+                        <div class="stream-panel glass-panel">
+                            <h4>Input Sequence</h4>
+                            <div class="stream-content" id="sim3InputStream">—</div>
+                        </div>
+
+                        <div class="stream-panel glass-panel">
+                            <h4>Prediction Probabilities</h4>
+                            <div class="prediction-bars" id="sim3PredBars"></div>
+                        </div>
+                    </div>
+
+                    <div class="loss-chart-row glass-panel">
+                        <div class="chart-box">
+                            <h4>Training Loss</h4>
+                            <div class="chart-wrap">
+                                <canvas id="sim3LossChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="status-bar">
+                        <div class="status-dot" id="sim3StatusDot"></div>
+                        <span id="sim3StatusText">Ready</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="./js/data.js"></script>
+    <script src="./js/tabs.js"></script>
+    <script src="./js/rnn-animation.js"></script>
+    <script src="./js/sim2-hidden-state.js"></script>
+    <script src="./js/sim3-sequence-learning.js"></script>
+    <script>
+        // Initialize the existing RNN animation in Sim 1 tab
+        document.addEventListener('DOMContentLoaded', () => {
+            RNNAnimation.init('rnnAnimationSection');
+        });
+    </script>
+</body>
+
+</html>
