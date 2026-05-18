@@ -1,6 +1,6 @@
 ### Theory
 
-Recurrent Neural Networks (RNNs) are a class of deep learning models specifically designed to process and model sequential data. RNNs originated as models inspired by biological neural systems and were initially explored within cognitive science and neuroscience. Over time, they were adopted by the machine learning community as powerful tools for modelling sequential data.
+Recurrent Neural Networks (RNNs) are a class of deep learning models specifically designed to process and model sequential data. RNNs originated as models inspired by biological neural systems and were initially explored within cognitive science and neuroscience. Over time, they were adopted by the machine learning community as powerful tools for modeling sequential data.
 
 Unlike traditional feedforward neural networks, which assume inputs to be independent of one another, RNNs incorporate recurrent connections that allow information to persist across time steps. These recurrent connections can be visualized as cycles in the network architecture, enabling the model to retain and utilize information from previous inputs while processing the current input.
 
@@ -54,7 +54,7 @@ Upon initial observation, the presence of cycles may appear to contradict the fe
 In an RNN, two types of connections operate simultaneously:
 
 - **Standard (feedforward) connections** propagate activations from one layer to the next within the same time step.
-- **Recurrent connections** transmit information from the hidden state $H_{t-1}$ at one time step to the hidden state $H_t$ at the next.
+- **Recurrent connections** transmit information from the hidden state $H_{t-1}$ at one time-step to the hidden state $H_t$ at the next.
 
 Through this mechanism, the hidden state acts as a form of memory, capturing contextual information from earlier elements in the sequence and influencing future predictions.
 
@@ -71,10 +71,10 @@ During the forward pass, the hidden states at each time step must be stored so t
 #### Merits of Recurrent Neural Networks
 
 - **Sequential Memory:**
-  RNNs retain information from previous inputs, making them ideal for time-series predictions where past data is crucial. This makes them useful for tasks such as language modelling, where the meaning of a word depends on the context in which it appears.
+  RNNs retain information from previous inputs making them ideal for time-series predictions where past data is crucial. This makes them useful for the tasks such as language modelling, where the meaning of the word depends on the context in which it appears.
 
 - **Variable-Length Sequences:**
-  RNNs are designed to handle input sequences of variable length, which makes them well-suited for tasks such as speech recognition, natural language processing, and time-series analysis.
+  RNNs are designed to handle the input sequences of variable length, which makes them well-suited for tasks such as speech recognition, natural language processing, and time-series analysis.
 
 - **Parameter Sharing:**
   RNNs share the same set of parameters across all time steps, which reduces the number of parameters that need to be learnt and can lead to better generalization.
@@ -84,10 +84,10 @@ During the forward pass, the hidden states at each time step must be stored so t
 #### Demerits of Recurrent Neural Networks
 
 - **Vanishing Gradients:**
-  During backpropagation, gradients diminish as they pass through each time step, leading to minimal weight updates. This limits the RNN's ability to learn long-term dependencies, which is crucial for tasks like language translation.
+  During backpropagation, gradients diminish as they pass through each time step leading to minimal weight updates. This limits the RNN's ability to learn long–term dependencies which is crucial for tasks like language translation.
 
 - **Exploding Gradients:**
-  Sometimes gradients grow uncontrollably, causing excessively large weight updates that destabilize training. This is the problem of exploding gradients in RNNs.
+  Sometimes gradients grow uncontrollably causing excessively large weight updates that de-stabilize training, which leads to the problem of exploding gradient in RNNs.
 
 - **Lack of Parallelism:**
   RNNs are inherently sequential, which makes it difficult to parallelize the computation. This limits the speed and scalability of the network compared to architectures like Transformers.

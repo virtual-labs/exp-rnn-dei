@@ -1,6 +1,6 @@
 ### Procedure
 
-The objective of this part of the experiment is to implement a vanilla Recurrent Neural Network (RNN) for character-level sequence modelling. The Tiny Shakespeare dataset is used, where the model learns from individual characters in a text corpus to capture sequential dependencies and generate coherent text. This part focuses on understanding sequence unrolling, hidden-state propagation across time steps, and the training of RNNs using Backpropagation Through Time (BPTT), along with visualizing the evolution of hidden states during text generation.
+The objective of this part of the experiment is to implement a vanilla Recurrent Neural Network (RNN) for character-level sequence modeling. The Tiny Shakespeare dataset is used, where individual characters from a text corpus are learned to model sequential dependencies and generate coherent text. This part focuses on understanding sequence unrolling, hidden-state propagation over time steps, and training RNNs using Backpropagation Through Time (BPTT), as well as visualizing the evolution of hidden states during text generation.
 
 ---
 
@@ -12,11 +12,11 @@ Import necessary Python libraries such as PyTorch, NumPy, and Matplotlib for mod
 
 #### 2. Dataset Description and Loading
 
-The Tiny Shakespeare dataset is a character-level text corpus containing a small subset of William Shakespeare's plays. It consists of dialogues, character names, and stage directions written in plain text format.
+The Tiny Shakespeare dataset is a character-level text corpus containing a small subset of William Shakespeare's plays. It consists of dialogues, character names, and stage directions, all written in plain text.
 
 - Each character (letters, digits, punctuation, spaces) is treated as an individual token.
 - The dataset is suitable for sequence modelling and text generation tasks.
-- The text file is downloaded and loaded into memory for further preprocessing.
+- The text file is downloaded and loaded into memory for further pre-processing.
 
 The successful loading of the dataset is verified.
 
@@ -42,7 +42,7 @@ This ensures proper training and evaluation of the model.
 
 ---
 
-#### 5. Hyperparameter Initialization
+#### 5. Hyper-parameter Initialization
 
 Initialize training parameters such as:
 
@@ -60,13 +60,13 @@ These parameters control learning behaviour and model capacity.
 
 #### 6. Batch Generation
 
-Create mini-batches of input sequences and corresponding target sequences using fixed sequence lengths (sliding window approach) to enable efficient training. Input sequences (x) and target sequences (y) are created such that each target character is the next character in the sequence.
+Create mini-batches of input and target sequences with fixed sequence lengths (sliding-window approach) to enable efficient training. Input sequences (x) and target sequences (y) are created such that each target character is the next character in the sequence.
 
 ---
 
 #### 7. RNN Model Definition
 
-Define a character-level RNN model consisting of:
+Define a Character-level RNN model consisting of:
 
 - An Embedding layer to convert character indices into dense vectors
 - A multi-layer vanilla RNN to process sequential data
@@ -88,7 +88,7 @@ Initialize the model with zero hidden states.
 
 #### 9. Loss Curve Visualization
 
-Plot training and validation loss curves to analyse model convergence and learning behaviour.
+Plot training and validation loss curves to analyze model convergence and learning behavior.
 
 ---
 
