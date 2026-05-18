@@ -155,7 +155,7 @@
       "difficulty": "beginner"
     },
     {
-      "question": "10. What dataset is commonly used for character-level language modelling demonstrations?",
+      "question": "10. What dataset is commonly used for character-level language modeling demonstrations?",
       "answers": {
         "a": "MNIST",
         "b": "CIFAR-10",
@@ -163,10 +163,10 @@
         "d": "Tiny Shakespeare"
       },
       "explanations": {
-        "a": "Incorrect because MNIST is a handwritten digit image dataset, not used for text modelling.",
+        "a": "Incorrect because MNIST is a handwritten digit image dataset, not used for text modeling.",
         "b": "Incorrect because CIFAR-10 is an image classification dataset.",
         "c": "Incorrect because ImageNet is used for large-scale image recognition tasks.",
-        "d": "Correct because Tiny Shakespeare is widely used for character-level language modelling with RNNs."
+        "d": "Correct because Tiny Shakespeare is widely used for character-level language modeling with RNNs."
       },
       "correctAnswer": "d",
       "difficulty": "beginner"
