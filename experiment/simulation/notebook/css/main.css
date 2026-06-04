@@ -263,7 +263,8 @@ body {
     box-shadow: 0 4px 12px rgba(25, 135, 84, 0.35);
 }
 
-.run-all-btn:disabled {
+.run-all-btn:disabled,
+.run-all-btn.btn-locked {
     opacity: 0.6;
     cursor: not-allowed;
 }

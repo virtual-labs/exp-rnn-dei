@@ -2,35 +2,171 @@
   "version": 2.0,
   "questions": [
     {
-      "question": "This is a Sample Question 1?",
+      "question": "1. What is the purpose of the recurrent connection in an RNN?",
       "answers": {
-        "a": "answer1",
-        "b": "answer2",
-        "c": "answer3",
-        "d": "answer4"
+        "a": "To propagate the hidden state across different time steps",
+        "b": "To adjust the weights and biases",
+        "c": "To reduce the dimensionality of the input",
+        "d": "None of the above"
       },
       "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
-        "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
+        "a": "Correct because this enables memory across the sequence.",
+        "b": "Incorrect because weight updates are handled during training.",
+        "c": "Incorrect because dimensionality reduction is not the goal.",
+        "d": "Incorrect because option (a) is correct."
       },
       "correctAnswer": "a",
       "difficulty": "beginner"
     },
     {
-      "question": "This is a Sample Question 2?",
+      "question": "2. What is the purpose of the initial hidden state in an RNN?",
       "answers": {
-        "a": "answer1",
-        "b": "answer2",
-        "c": "answer3",
-        "d": "answer4"
+        "a": "To provide the starting point for the recurrent computation",
+        "b": "To adjust the learning rate",
+        "c": "To compute gradients",
+        "d": "None of the above"
       },
       "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
-        "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
+        "a": "Correct because it initializes memory before sequence processing.",
+        "b": "Incorrect because learning rate is not related to hidden state.",
+        "c": "Incorrect because gradients are computed during backpropagation.",
+        "d": "Incorrect because option (a) is correct."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "3. How does the RNN model handle sequential data?",
+      "answers": {
+        "a": "Using a sliding window",
+        "b": "Processing data point by point with memory of past inputs",
+        "c": "Averaging inputs",
+        "d": "Applying convolution"
+      },
+      "explanations": {
+        "a": "Incorrect because sliding windows do not retain memory.",
+        "b": "Correct because hidden state retains past information.",
+        "c": "Incorrect because this loses temporal order.",
+        "d": "Incorrect because convolutions are used in CNNs."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "4. In the context of RNNs, what does \"unrolling\" refer to?",
+      "answers": {
+        "a": "Training with large batch size",
+        "b": "Unfolding the RNN across time steps",
+        "c": "Reducing number of layers",
+        "d": "Implementing dropout"
+      },
+      "explanations": {
+        "a": "Incorrect because batch size is unrelated.",
+        "b": "Correct because it helps visualize sequence processing.",
+        "c": "Incorrect because unrolling does not change depth.",
+        "d": "Incorrect because dropout is a regularization technique."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "5. What is the primary reason for visualizing sequence unrolling in RNNs?",
+      "answers": {
+        "a": "To reduce model complexity",
+        "b": "To understand how parameters change",
+        "c": "To visualize how information flows over time",
+        "d": "To improve accuracy directly"
+      },
+      "explanations": {
+        "a": "Incorrect because visualization does not change or reduce complexity.",
+        "b": "Incorrect because parameters are shared across time steps.",
+        "c": "Correct because unrolling shows how data and hidden states propagate across time steps.",
+        "d": "Incorrect because visualization itself does not improve model accuracy."
+      },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "6. What happens if the initial hidden state of an RNN is set to zero?",
+      "answers": {
+        "a": "The model cannot learn",
+        "b": "The network starts without prior memory",
+        "c": "The first output is ignored",
+        "d": "The gradients become zero permanently"
+      },
+      "explanations": {
+        "a": "Incorrect because the model can still learn during training.",
+        "b": "Correct because zero initialization means no past information at the start.",
+        "c": "Incorrect because the first output is still computed.",
+        "d": "Incorrect because gradients are not permanently zero."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "7. Which visualization helps understand memory behaviour in RNNs?",
+      "answers": {
+        "a": "Accuracy curve",
+        "b": "Confusion matrix",
+        "c": "ROC curve",
+        "d": "Hidden-state evolution"
+      },
+      "explanations": {
+        "a": "Incorrect because accuracy shows performance, not memory.",
+        "b": "Incorrect because used for classification evaluation.",
+        "c": "Incorrect because ROC curves are used for binary classification.",
+        "d": "Correct because it shows how memory changes over time."
+      },
+      "correctAnswer": "d",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "8. During text generation, what is used as input after the first character?",
+      "answers": {
+        "a": "Random noise",
+        "b": "Original training data",
+        "c": "Previously generated character",
+        "d": "Entire sentence"
+      },
+      "explanations": {
+        "a": "Incorrect because noise is used in GANs, not RNN text generation.",
+        "b": "Incorrect because training data is not reused during generation.",
+        "c": "Correct because each generated character becomes the next input.",
+        "d": "Incorrect because generation is done step-by-step."
+      },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "9. What technique is used to train RNNs over multiple time steps?",
+      "answers": {
+        "a": "Forward propagation",
+        "b": "Batch Normalization",
+        "c": "Dropout",
+        "d": "Backpropagation Through Time (BPTT)"
+      },
+      "explanations": {
+        "a": "Incorrect because forward propagation only computes outputs.",
+        "b": "Incorrect because Batch Normalization is a technique to improve training stability, not a sequence-specific method.",
+        "c": "Incorrect because dropout is a regularization technique.",
+        "d": "Correct because BPTT propagates gradients across time steps."
+      },
+      "correctAnswer": "d",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "10. What problem commonly occurs in vanilla RNNs when handling long sequences?",
+      "answers": {
+        "a": "Overfitting",
+        "b": "Exploding memory",
+        "c": "Vanishing gradients",
+        "d": "Data leakage"
+      },
+      "explanations": {
+        "a": "Incorrect because overfitting is not specific to long sequences.",
+        "b": "Incorrect because memory does not explode; gradients may.",
+        "c": "Correct because gradients shrink over long sequences, affecting learning.",
+        "d": "Incorrect because data leakage is a data handling issue."
       },
       "correctAnswer": "c",
       "difficulty": "beginner"

@@ -1,0 +1,871 @@
+/* ============================================
+   RNN Hidden State Evolution Animation Styles
+   Pure CSS implementation - no external libraries
+   ============================================ */
+
+/* ============================================
+   Animation Section Container
+   ============================================ */
+
+.rnn-animation-section {
+    background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%);
+    border-radius: var(--radius-lg);
+    margin-top: var(--spacing-xl);
+    padding: var(--spacing-xl);
+    border: 2px solid rgba(99, 102, 241, 0.2);
+    box-shadow: 0 10px 40px rgba(99, 102, 241, 0.1);
+}
+
+.rnn-animation-section.hidden {
+    display: none;
+}
+
+.rnn-animation-header {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+.rnn-animation-header h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #4f46e5;
+    margin-bottom: var(--spacing-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+}
+
+.rnn-animation-header p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+/* ============================================
+   Animation Controls
+   ============================================ */
+
+.rnn-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-xl);
+    box-shadow: var(--shadow-sm);
+}
+
+.rnn-control-buttons {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.rnn-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.rnn-btn-primary {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.rnn-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+}
+
+.rnn-btn-primary.playing {
+    background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+}
+
+.rnn-btn-secondary {
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.rnn-btn-secondary:hover {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+.rnn-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Step Control */
+.rnn-step-control {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.rnn-step-label {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.rnn-step-value {
+    font-weight: 700;
+    color: #6366f1;
+    min-width: 60px;
+    text-align: center;
+}
+
+.rnn-step-slider {
+    width: 150px;
+    height: 6px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--bg-tertiary);
+    border-radius: 3px;
+    outline: none;
+}
+
+.rnn-step-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
+    transition: transform 0.2s ease;
+}
+
+.rnn-step-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+}
+
+/* Speed Control */
+.rnn-speed-control {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.rnn-speed-label {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.rnn-speed-btn {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border: 1px solid var(--border-color);
+    background: white;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.rnn-speed-btn:hover {
+    border-color: #6366f1;
+    color: #6366f1;
+}
+
+.rnn-speed-btn.active {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    color: white;
+    border-color: transparent;
+}
+
+/* Status Indicator */
+.rnn-status {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+.rnn-status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.rnn-status-dot.active {
+    background: #22c55e;
+    box-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
+    animation: statusPulse 1.5s ease infinite;
+}
+
+@keyframes statusPulse {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.7;
+        transform: scale(1.1);
+    }
+}
+
+/* ============================================
+   RNN Sequence Visualization
+   ============================================ */
+
+.rnn-visualization {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+}
+
+.rnn-viz-label {
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+.rnn-viz-label span {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.rnn-viz-sublabel {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 400 !important;
+    margin-top: var(--spacing-xs);
+}
+
+/* Sequence Container */
+.rnn-sequence-wrapper {
+    overflow-x: auto;
+    padding: var(--spacing-md) 0;
+}
+
+.rnn-sequence {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    min-width: max-content;
+    padding: var(--spacing-md);
+}
+
+.rnn-sequence-item {
+    display: flex;
+    align-items: center;
+}
+
+/* ============================================
+   RNN Cell
+   ============================================ */
+
+.rnn-cell-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
+    opacity: 0.5;
+    transform: scale(0.95);
+    transition: all 0.4s ease;
+}
+
+.rnn-cell-wrapper.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Input Label */
+.rnn-input-label {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+    border-radius: var(--radius-sm);
+    font-family: 'Fira Code', monospace;
+    font-size: 0.85rem;
+    color: #6366f1;
+    transition: all 0.3s ease;
+}
+
+.rnn-cell-wrapper.active .rnn-input-label {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    animation: inputBounce 0.5s ease;
+}
+
+@keyframes inputBounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-4px);
+    }
+}
+
+.rnn-var-name {
+    font-weight: 600;
+}
+
+.rnn-subscript {
+    font-size: 0.7em;
+    vertical-align: sub;
+}
+
+.rnn-char-value {
+    color: #22c55e;
+}
+
+.rnn-cell-wrapper.active .rnn-char-value {
+    color: #a5f3fc;
+}
+
+/* Data Flow Arrow (vertical) */
+.rnn-data-flow {
+    width: 2px;
+    height: 20px;
+    background: linear-gradient(to bottom, rgba(99, 102, 241, 0.3), rgba(99, 102, 241, 0.6));
+    position: relative;
+}
+
+.rnn-cell-wrapper.active .rnn-data-flow {
+    background: linear-gradient(to bottom, #6366f1, #8b5cf6);
+}
+
+.rnn-cell-wrapper.active .rnn-data-flow::after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: #6366f1;
+    border-radius: 50%;
+    left: -2px;
+    animation: dataFlowDown 0.8s ease infinite;
+}
+
+@keyframes dataFlowDown {
+    0% {
+        top: 0;
+        opacity: 1;
+    }
+
+    100% {
+        top: 100%;
+        opacity: 0;
+    }
+}
+
+/* Main Cell Block */
+.rnn-cell-block {
+    width: 90px;
+    padding: var(--spacing-md);
+    background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+    border: 2px solid #a5b4fc;
+    border-radius: var(--radius-md);
+    text-align: center;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.rnn-cell-wrapper.active .rnn-cell-block {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    border-color: #4f46e5;
+    box-shadow: 0 0 30px rgba(99, 102, 241, 0.5);
+    animation: cellPulse 1.5s ease infinite;
+}
+
+@keyframes cellPulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+    }
+
+    50% {
+        box-shadow: 0 0 40px rgba(99, 102, 241, 0.6);
+    }
+}
+
+.rnn-cell-title {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #4338ca;
+    margin-bottom: 2px;
+}
+
+.rnn-cell-wrapper.active .rnn-cell-title {
+    color: white;
+}
+
+.rnn-cell-subtitle {
+    font-size: 0.65rem;
+    color: #6366f1;
+}
+
+.rnn-cell-wrapper.active .rnn-cell-subtitle {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Cell Operations (shown when active) */
+.rnn-cell-operations {
+    margin-top: var(--spacing-sm);
+    display: none;
+}
+
+.rnn-cell-wrapper.active .rnn-cell-operations {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+.rnn-operation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-top: 4px;
+}
+
+.rnn-op-icon {
+    font-size: 0.7rem;
+}
+
+/* Processing Indicator */
+.rnn-processing-indicator {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 12px;
+    height: 12px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    display: none;
+}
+
+.rnn-cell-wrapper.active .rnn-processing-indicator {
+    display: block;
+    animation: spin 1s linear infinite;
+}
+
+/* Output Label */
+.rnn-output-label {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: rgba(99, 102, 241, 0.1);
+    border-radius: var(--radius-sm);
+    font-family: 'Fira Code', monospace;
+    font-size: 0.8rem;
+    color: #6366f1;
+    transition: all 0.3s ease;
+}
+
+.rnn-cell-wrapper.active .rnn-output-label {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%);
+    animation: outputScale 0.5s ease;
+}
+
+@keyframes outputScale {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.rnn-dim-info {
+    font-size: 0.7em;
+    opacity: 0.8;
+}
+
+.rnn-superscript {
+    font-size: 0.7em;
+    vertical-align: super;
+}
+
+/* Hidden State Preview */
+.rnn-hidden-preview {
+    display: flex;
+    gap: 2px;
+    margin-top: var(--spacing-xs);
+    justify-content: center;
+}
+
+.rnn-hidden-mini-cell {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.rnn-hidden-more {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+/* ============================================
+   Arrow Between Cells
+   ============================================ */
+
+.rnn-arrow-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 var(--spacing-sm);
+    min-width: 80px;
+}
+
+.rnn-arrow-svg {
+    overflow: visible;
+}
+
+.rnn-arrow-line {
+    transition: all 0.3s ease;
+}
+
+.rnn-arrow-active .rnn-arrow-line {
+    stroke-width: 4;
+    filter: drop-shadow(0 0 6px rgba(99, 102, 241, 0.5));
+}
+
+.rnn-arrow-dashes {
+    stroke-dasharray: 8 8;
+}
+
+.rnn-arrow-active .rnn-arrow-dashes {
+    animation: dashFlow 0.5s linear infinite;
+}
+
+@keyframes dashFlow {
+    to {
+        stroke-dashoffset: -16;
+    }
+}
+
+.rnn-arrow-head {
+    transition: all 0.3s ease;
+}
+
+.rnn-arrow-label {
+    font-size: 0.75rem;
+    font-family: 'Fira Code', monospace;
+    color: #6366f1;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+    margin-top: 4px;
+}
+
+.rnn-arrow-active .rnn-arrow-label {
+    opacity: 1;
+    animation: labelBounce 0.5s ease;
+}
+
+@keyframes labelBounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-2px);
+    }
+}
+
+/* Arrow Particles */
+.rnn-arrow-particle {
+    fill: #818cf8;
+    opacity: 0;
+}
+
+.rnn-arrow-active .rnn-arrow-particle {
+    animation: particleFlow 0.6s ease forwards;
+}
+
+@keyframes particleFlow {
+    0% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(70px);
+    }
+}
+
+/* ============================================
+   Step Explanation Panel
+   ============================================ */
+
+.rnn-step-explanation {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+    border-left: 4px solid #6366f1;
+    animation: fadeIn 0.3s ease;
+}
+
+.rnn-explanation-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+}
+
+.rnn-step-badge {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    color: white;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.rnn-step-char {
+    font-family: 'Fira Code', monospace;
+    color: #6366f1;
+    font-weight: 600;
+}
+
+.rnn-explanation-text {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.rnn-explanation-text strong {
+    color: #6366f1;
+}
+
+/* Formula Box */
+.rnn-formula-box {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: white;
+    border-radius: var(--radius-sm);
+    margin-top: var(--spacing-md);
+    box-shadow: var(--shadow-sm);
+}
+
+.rnn-formula-legend {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    font-family: 'Fira Code', monospace;
+    opacity: 0.85;
+}
+
+.rnn-formula-note {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    font-style: italic;
+    opacity: 0.75;
+    border-top: 1px solid var(--border-color);
+    padding-top: var(--spacing-xs);
+    margin-top: 2px;
+}
+
+.rnn-formula-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.rnn-formula-code {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.85rem;
+    color: #4338ca;
+}
+
+/* ============================================
+   Hidden State Heatmap
+   ============================================ */
+
+.rnn-heatmap-section {
+    margin-top: var(--spacing-xl);
+}
+
+.rnn-heatmap-container {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-md);
+}
+
+.rnn-heatmap-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-lg);
+}
+
+.rnn-heatmap-header h3 {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+}
+
+.rnn-heatmap-subtitle {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+/* Heatmap Grid */
+.rnn-heatmap-wrapper {
+    display: flex;
+    gap: var(--spacing-sm);
+    overflow-x: auto;
+}
+
+.rnn-heatmap-y-labels {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-top: 0;
+    /* Align with grid */
+}
+
+.rnn-heatmap-y-label {
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: var(--spacing-sm);
+    font-family: 'Fira Code', monospace;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.rnn-heatmap-grid {
+    display: grid;
+    gap: 4px;
+}
+
+.rnn-heatmap-column {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.rnn-heatmap-cell {
+    width: 45px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    font-size: 0.65rem;
+    font-weight: 600;
+    transition: all 0.4s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.rnn-heatmap-cell.active {
+    transform: scale(1.1);
+    box-shadow: 0 0 12px rgba(99, 102, 241, 0.6);
+    z-index: 10;
+}
+
+.rnn-cell-value {
+    font-family: 'Fira Code', monospace;
+}
+
+/* X-axis Labels */
+.rnn-heatmap-x-labels {
+    display: grid;
+    gap: 4px;
+    margin-top: var(--spacing-sm);
+    padding-left: 40px;
+    /* Align with grid */
+}
+
+.rnn-heatmap-x-label {
+    text-align: center;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    transition: all 0.3s ease;
+}
+
+.rnn-heatmap-x-label.active {
+    color: #6366f1;
+    font-weight: 700;
+}
+
+/* Color Legend */
+.rnn-heatmap-legend {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-lg);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.rnn-legend-gradient {
+    width: 150px;
+    height: 12px;
+    background: linear-gradient(to right, #3b82f6, #93c5fd, #ffffff, #fed7aa, #f97316);
+    border-radius: 6px;
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+
+@media (max-width: 768px) {
+    .rnn-controls {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+
+    .rnn-sequence {
+        justify-content: flex-start;
+    }
+
+    .rnn-cell-block {
+        width: 70px;
+        padding: var(--spacing-sm);
+    }
+
+    .rnn-arrow-container {
+        min-width: 50px;
+    }
+
+    .rnn-heatmap-cell {
+        width: 35px;
+        height: 28px;
+        font-size: 0.55rem;
+    }
+}

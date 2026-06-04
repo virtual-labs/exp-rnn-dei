@@ -10,7 +10,7 @@
 const CONFIG = {
     executionDelay: 1500, // 1.5 second delay for realistic execution simulation
     chartAnimationDuration: 1000,
-    totalSteps: 9,
+    totalSteps: 8,
     // Cell numbers where hyperparameters are set (epochs/lr at cell 3, startText at cell 8)
     hyperparamCell: 3,
     startTextCell: 8
@@ -144,10 +144,7 @@ function resetFromStep(fromStep) {
         state.charts.lossChart.destroy();
         state.charts.lossChart = null;
     }
-    if (fromStep <= 9 && state.charts.hiddenStateChart) {
-        state.charts.hiddenStateChart.destroy();
-        state.charts.hiddenStateChart = null;
-    }
+
     
     // Reset steps from fromStep to the end
     for (let i = fromStep; i <= CONFIG.totalSteps; i++) {
@@ -274,8 +271,6 @@ async function executeCell(cellNumber) {
     // Render charts if needed
     if (cellNumber === 7) {
         renderLossChart();
-    } else if (cellNumber === 9) {
-        renderHiddenStateChart();
     }
     
     // Update UI to show completed state
@@ -427,16 +422,17 @@ function resetSimulation() {
     // Hide completion message
     elements.completionMessage.classList.add('hidden');
     
+    // Lock download button again
+    if (elements.downloadBtn) {
+        elements.downloadBtn.classList.add('btn-locked');
+        elements.downloadBtn.title = 'Run all cells to enable download';
+    }
+    
     // Update code display with current hyperparameters
     updateCodeDisplay();
     
     // Update button states - only first cell should be enabled
     updateRunButtonStates();
-    
-    // Hide and reset RNN Animation
-    if (typeof RNNAnimation !== 'undefined') {
-        RNNAnimation.hide();
-    }
 }
 
 // ============================================
@@ -447,9 +443,10 @@ function showCompletionMessage() {
     elements.completionMessage.classList.remove('hidden');
     elements.completionMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
     
-    // Trigger RNN Hidden State Animation
-    if (typeof RNNAnimation !== 'undefined') {
-        RNNAnimation.show();
+    // Enable download button
+    if (elements.downloadBtn) {
+        elements.downloadBtn.classList.remove('btn-locked');
+        elements.downloadBtn.title = '';
     }
 }
 
@@ -558,109 +555,7 @@ function renderLossChart() {
     });
 }
 
-function renderHiddenStateChart() {
-    const ctx = document.getElementById('hiddenStateChart');
-    if (!ctx) return;
-    
-    // Destroy existing chart
-    if (state.charts.hiddenStateChart) {
-        state.charts.hiddenStateChart.destroy();
-    }
-    
-    // Get real hidden state data from HIDDEN_STATES_DATA
-    const hiddenKey = `${state.epochs}_${state.lr}`;
-    const hiddenData = HIDDEN_STATES_DATA[hiddenKey];
-    
-    if (!hiddenData || !hiddenData[state.startText]) {
-        console.warn(`No hidden state data for ${hiddenKey}_${state.startText}`);
-        return;
-    }
-    
-    const startTextData = hiddenData[state.startText];
-    const chars = startTextData.characters;
-    const hiddenStates = startTextData.hidden_states;
-    
-    // Only use 4 colors for 4 units (matching the reference graph)
-    const colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728'];
-    
-    // Create datasets from real hidden state data - only first 4 units
-    const datasets = [];
-    for (let unit = 0; unit < 4; unit++) {
-        const data = hiddenStates.map(h => h[unit]);
-        datasets.push({
-            label: `Unit ${unit}`,
-            data: data,
-            borderColor: colors[unit],
-            backgroundColor: 'transparent',
-            borderWidth: 2,
-            tension: 0,  // Straight lines (no curve)
-            pointRadius: 4,
-            pointHoverRadius: 6,
-            pointBackgroundColor: colors[unit]
-        });
-    }
-    
-    state.charts.hiddenStateChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: chars,
-            datasets: datasets
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            animation: {
-                duration: CONFIG.chartAnimationDuration
-            },
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Hidden state evolution for a short sequence',
-                    color: '#212529',
-                    font: {
-                        size: 16,
-                        weight: 'bold'
-                    }
-                },
-                legend: {
-                    position: 'right',
-                    labels: {
-                        color: '#495057',
-                        boxWidth: 12
-                    }
-                }
-            },
-            scales: {
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Time step (character)',
-                        color: '#495057'
-                    },
-                    ticks: {
-                        color: '#6c757d'
-                    },
-                    grid: {
-                        color: 'rgba(0, 0, 0, 0.1)'
-                    }
-                },
-                y: {
-                    title: {
-                        display: true,
-                        text: 'Hidden unit value',
-                        color: '#495057'
-                    },
-                    ticks: {
-                        color: '#6c757d'
-                    },
-                    grid: {
-                        color: 'rgba(0, 0, 0, 0.1)'
-                    }
-                }
-            }
-        }
-    });
-}
+
 
 // ============================================
 // Mobile Menu
@@ -715,7 +610,17 @@ function initEventListeners() {
     
     // Download button
     if (elements.downloadBtn) {
-        elements.downloadBtn.addEventListener('click', downloadExperiment);
+        // Lock download button initially
+        elements.downloadBtn.classList.add('btn-locked');
+        elements.downloadBtn.title = 'Run all cells to enable download';
+        
+        elements.downloadBtn.addEventListener('click', () => {
+            if (elements.downloadBtn.classList.contains('btn-locked')) {
+                alert('Please run all the cells first to download the experiment.');
+                return;
+            }
+            downloadExperiment();
+        });
     }
     
     // Hyperparameter dropdowns with reset logic
